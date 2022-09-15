@@ -1,10 +1,20 @@
 import ReactDOM from 'react-dom/client';
+import { QueryClientProvider } from 'react-query';
+import { App } from './App';
+import { queryClient, trpc, useTrpcClient } from './trpc';
+
 import './index.css';
 
-import { Test } from '@blog/components/core';
+function Main() {
+	const [trpcClient] = useTrpcClient();
 
-function App() {
-	return <Test />;
+	return (
+		<trpc.Provider client={trpcClient} queryClient={queryClient}>
+			<QueryClientProvider client={queryClient}>
+				<App />
+			</QueryClientProvider>
+		</trpc.Provider>
+	);
 }
 
-ReactDOM.createRoot(document.querySelector('#app') as Element).render(<App />);
+ReactDOM.createRoot(document.querySelector('#app') as Element).render(<Main />);

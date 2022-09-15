@@ -1,5 +1,6 @@
 import { ROOT } from '@blog/constants';
 import { rootenv } from '@blog/utils';
+import Dotenv from 'dotenv-webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import path from 'path';
 import { Configuration as WebpackConfig } from 'webpack';
@@ -49,7 +50,10 @@ const webpackConfig: WebpackConfig = {
 			}
 		]
 	},
-	plugins: [new HtmlWebpackPlugin({ template: path.resolve(APP_DIR, 'src', 'index.html') })]
+	plugins: [
+		new HtmlWebpackPlugin({ template: path.resolve(APP_DIR, 'src', 'index.html') }),
+		new Dotenv({ systemvars: true, path: path.resolve(ROOT, '.env') })
+	]
 };
 
 export default webpackConfig;

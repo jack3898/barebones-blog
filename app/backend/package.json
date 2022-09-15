@@ -2,9 +2,22 @@
 	"name": "@blog/backend",
 	"version": "1.0.0",
 	"description": "Backend application with tRPC and Prisma.",
-	"devDependencies": {
-		"prisma": "^4.3.1"
+	"main": "src/index.ts",
+	"scripts": {
+		"dev": "nodemon src/index.ts"
 	},
 	"author": "Jack Wright",
-	"license": "ISC"
+	"license": "ISC",
+	"dependencies": {
+		"@blog/utils": "*",
+		"@trpc/server": "^9.27.2",
+		"cors": "^2.8.5",
+		"express": "^4.18.1",
+		"ts-node": "^10.9.1"
+	},
+	"devDependencies": {
+		"@types/cors": "^2.8.12",
+		"nodemon": "^2.0.19",
+		"prisma": "^4.3.1"
+	}
 }

@@ -1,3 +1,3 @@
-export function Test() {
-	return <p className="bold italic">test</p>;
+export function Test({ message }: { message?: string }) {
+	return <p className="bold italic">{message}</p>;
 }

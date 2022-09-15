@@ -9,11 +9,16 @@
 	"license": "ISC",
 	"dependencies": {
 		"@blog/components": "*",
+		"@trpc/client": "^9.27.2",
+		"@trpc/react": "^9.27.2",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
-		"react-router-dom": "^6.4.0"
+		"react-query": "^3.39.2",
+		"react-router-dom": "^6.4.0",
+		"zod": "^3.19.1"
 	},
 	"devDependencies": {
+		"@blog/backend": "*",
 		"@types/react-dom": "^18.0.6",
 		"ts-node": "^10.9.1"
 	}
