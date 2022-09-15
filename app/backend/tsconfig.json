@@ -1,0 +1,7 @@
+{
+	"extends": "@blog/config-ts/tsconfig.base.json",
+	"compilerOptions": {
+		"outDir": "dist",
+		"lib": ["esnext"]
+	}
+}

@@ -1,0 +1,22 @@
+{
+	"name": "simple-blog",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"dev": "turbo run dev --parallel"
+	},
+	"keywords": [],
+	"author": "Jack Wright",
+	"license": "ISC",
+	"workspaces": [
+		"app/*",
+		"packages/*"
+	],
+	"dependencies": {
+		"turbo": "^1.4.6"
+	},
+	"devDependencies": {
+		"@blog/config-ts": "*"
+	}
+}

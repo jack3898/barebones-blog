@@ -1,0 +1,10 @@
+{
+	"name": "@blog/backend",
+	"version": "1.0.0",
+	"description": "Backend application with tRPC and Prisma.",
+	"devDependencies": {
+		"prisma": "^4.3.1"
+	},
+	"author": "Jack Wright",
+	"license": "ISC"
+}

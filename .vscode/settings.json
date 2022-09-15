@@ -1,0 +1,17 @@
+{
+	"[prisma]": {
+		"editor.defaultFormatter": "Prisma.prisma"
+	},
+
+	"files.eol": "\n",
+	"files.trimTrailingWhitespace": true,
+
+	"typescript.tsserver.experimental.enableProjectDiagnostics": true,
+
+	"editor.codeActionsOnSave": {
+		"source.organizeImports": true,
+		"source.sortMembers": true
+	},
+
+	"css.lint.unknownAtRules": "ignore"
+}

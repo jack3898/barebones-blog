@@ -1,0 +1,7 @@
+{
+	"name": "@blog/config-ts",
+	"version": "1.0.0",
+	"description": "Base TS configs.",
+	"author": "Jack Wright",
+	"license": "ISC"
+}
