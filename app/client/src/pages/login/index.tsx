@@ -1,3 +1,4 @@
+import { Container } from '@blog/components/core';
 import { useFormik } from 'formik';
 import { Link } from 'react-router-dom';
 
@@ -20,20 +21,22 @@ export default function Login() {
 	});
 
 	return (
-		<>
-			<form onSubmit={handleSubmit}>
+		<Container className="grid gap-8 px-4">
+			<h1>Login</h1>
+			<form onSubmit={handleSubmit} className="bg-white p-4 rounded shadow grid gap-4">
 				<label>
-					Username: <input type="text" {...getFieldProps('username')} />
+					<div>Username:</div>
+					<input type="text" {...getFieldProps('username')} />
 				</label>
-				<br />
 				<label>
-					Password:
+					<div>Password:</div>
 					<input type="password" {...getFieldProps('password')} />
 				</label>
-				<br />
-				<button type="submit">Login</button>
+				<div>
+					<button type="submit">Login</button>
+				</div>
 			</form>
 			<Link to="/">Home</Link>
-		</>
+		</Container>
 	);
 }
