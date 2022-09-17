@@ -1,9 +1,11 @@
 import { Container, Post } from '@blog/components/core';
 import { format } from 'date-fns';
+import { useAuthContext } from 'src/Context/auth';
 import { trpc } from 'src/trpc';
 
 export default function Home() {
 	const posts = trpc.useQuery(['posts']);
+	const { loggedInUser } = useAuthContext();
 
 	if (!posts.isFetched) return null;
 
@@ -23,6 +25,9 @@ export default function Home() {
 					)
 				)}
 			</>
+			<p>
+				Logged in as <strong>{loggedInUser?.username}</strong>
+			</p>
 		</Container>
 	);
 }
