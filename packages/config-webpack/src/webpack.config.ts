@@ -3,6 +3,7 @@ import { rootenv } from '@blog/utils';
 import Dotenv from 'dotenv-webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import path from 'path';
+import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 import { Configuration as WebpackConfig } from 'webpack';
 
 rootenv();
@@ -12,7 +13,10 @@ const APP_DIR = path.resolve();
 const webpackConfig: WebpackConfig = {
 	mode: process.env.NODE_ENV as any,
 	devtool: 'source-map',
-	resolve: { extensions: ['.ts', '.tsx', '.js', '.jsx'] },
+	resolve: {
+		extensions: ['.ts', '.tsx', '.js', '.jsx'],
+		plugins: [new TsconfigPathsPlugin()] // So baseUrl in tsconfig works
+	},
 	resolveLoader: { modules: [path.resolve(ROOT, 'node_modules')] },
 	performance: { hints: false },
 	output: {

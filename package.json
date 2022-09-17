@@ -4,7 +4,10 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"dev": "turbo run dev --parallel"
+		"dev": "turbo run dev --parallel",
+		"generate": "turbo run generate",
+		"devtools": "turbo run devtools",
+		"postinstall": "npm run generate"
 	},
 	"keywords": [],
 	"author": "Jack Wright",

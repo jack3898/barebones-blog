@@ -2,6 +2,7 @@
 	"extends": "@blog/config-ts/tsconfig.base.json",
 	"compilerOptions": {
 		"jsx": "react-jsx",
-		"module": "commonjs"
+		"module": "commonjs",
+		"baseUrl": "."
 	}
 }

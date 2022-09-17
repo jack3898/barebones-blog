@@ -5,6 +5,12 @@
 		},
 		"build": {
 			"outputs": ["dist"]
+		},
+		"generate": {
+			"cache": false
+		},
+		"devtools": {
+			"cache": false
 		}
 	}
 }

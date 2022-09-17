@@ -1,7 +1,10 @@
-import * as trpc from '@trpc/server';
+import { createRouter } from '../trpcRouter';
 
-export const testRouter = trpc.router().query('test', {
-	resolve() {
-		return 'Test from tRPC!';
+export const testRouter = createRouter().query('test', {
+	resolve({ ctx }) {
+		return {
+			message: 'Test from tRPC!',
+			user: ctx.loggedInUser
+		};
 	}
 });
