@@ -1,10 +1,12 @@
 import { useFormik } from 'formik';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { RequireAuth } from 'src/components/RequireAuth';
+import { LoggedInMessage } from './LoggedInMessage';
 
 const server = process.env.SERVER_ORIGIN!;
 
-export function LoggedOutFlow() {
+export function LoginForm() {
 	const navigate = useNavigate();
 	const [error, setError] = useState<string | null>(null);
 
@@ -29,7 +31,7 @@ export function LoggedOutFlow() {
 	});
 
 	return (
-		<>
+		<RequireAuth mode={false} fallback={<LoggedInMessage />}>
 			<h1>Login</h1>
 			<form onSubmit={handleSubmit} className="bg-white p-4 rounded shadow grid gap-4">
 				<label>
@@ -46,6 +48,6 @@ export function LoggedOutFlow() {
 			</form>
 			{error && <p>{error}</p>}
 			<Link to="/">Home</Link>
-		</>
+		</RequireAuth>
 	);
 }

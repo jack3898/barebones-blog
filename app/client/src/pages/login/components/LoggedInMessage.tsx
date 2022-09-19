@@ -1,4 +1,4 @@
-export function LoggedInFlow() {
+export function LoggedInMessage() {
 	return (
 		<>
 			<h1>Login</h1>

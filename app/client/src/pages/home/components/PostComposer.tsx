@@ -2,6 +2,7 @@ import { Card, Post } from '@blog/components/core';
 import { format } from 'date-fns';
 import { useFormik } from 'formik';
 import ReactMarkdown from 'react-markdown';
+import { RequireAuth } from 'src/components/RequireAuth';
 import { useAuthContext } from 'src/context/auth';
 import { trpc } from 'src/trpc';
 
@@ -21,10 +22,8 @@ export function PostComposer() {
 		}
 	});
 
-	if (!loggedInUser) return null;
-
 	return (
-		<>
+		<RequireAuth>
 			<Card className="p-4 grid gap-4">
 				<strong>Create a new post</strong>
 				<form className="grid gap-4" onSubmit={handleSubmit}>
@@ -65,6 +64,6 @@ export function PostComposer() {
 					</>
 				</div>
 			)}
-		</>
+		</RequireAuth>
 	);
 }
