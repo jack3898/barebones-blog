@@ -1,4 +1,4 @@
-import { useAuthContext } from 'src/context/auth';
+import { useAuthContext } from 'src/context';
 
 type AuthenticatedProps = {
 	children: React.ReactNode;

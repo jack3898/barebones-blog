@@ -2,14 +2,14 @@ import { Card, Post } from '@blog/components/core';
 import { format } from 'date-fns';
 import { useFormik } from 'formik';
 import ReactMarkdown from 'react-markdown';
-import { RequireAuth } from 'src/components/RequireAuth';
-import { useAuthContext } from 'src/context/auth';
+import { RequireAuth } from 'src/components';
+import { useAuthContext } from 'src/context';
 import { trpc } from 'src/trpc';
 
 export function PostComposer() {
 	const createPostMutation = trpc.useMutation(['create-post']);
 	const { loggedInUser } = useAuthContext();
-	const { handleSubmit, getFieldProps, values, resetForm } = useFormik({
+	const { handleSubmit, getFieldProps, values } = useFormik({
 		initialValues: {
 			title: '',
 			content: '',
@@ -18,7 +18,7 @@ export function PostComposer() {
 		onSubmit: (values) => {
 			createPostMutation.mutate(values);
 
-			resetForm();
+			window.location.reload();
 		}
 	});
 

@@ -1,14 +1,11 @@
 import { useFormik } from 'formik';
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { RequireAuth } from 'src/components/RequireAuth';
-import { LoggedInMessage } from './LoggedInMessage';
-
-const server = process.env.SERVER_ORIGIN!;
+import { Link } from 'react-router-dom';
+import { RequireAuth } from 'src/components';
+import { useLogin, useLogout } from 'src/hooks';
 
 export function LoginForm() {
-	const navigate = useNavigate();
-	const [error, setError] = useState<string | null>(null);
+	const [login, error] = useLogin();
+	const [logout] = useLogout();
 
 	const { handleSubmit, getFieldProps } = useFormik({
 		initialValues: {
@@ -16,38 +13,40 @@ export function LoginForm() {
 			password: ''
 		},
 		onSubmit: async (values) => {
-			// TODO: Add abort controller in a custom fetch hook abstraction
-			fetch(`${server}/auth`, {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				credentials: 'include',
-				body: JSON.stringify(values)
-			}).then((res) => {
-				if (res.status === 200) return void navigate('/');
-
-				setError('Incorrect username or password');
-			});
+			login(values);
 		}
 	});
 
 	return (
-		<RequireAuth mode={false} fallback={<LoggedInMessage />}>
+		<>
 			<h1>Login</h1>
-			<form onSubmit={handleSubmit} className="bg-white p-4 rounded shadow grid gap-4">
-				<label>
-					<div>Username:</div>
-					<input type="text" {...getFieldProps('username')} />
-				</label>
-				<label>
-					<div>Password:</div>
-					<input type="password" {...getFieldProps('password')} />
-				</label>
-				<div>
-					<button type="submit">Login</button>
-				</div>
-			</form>
-			{error && <p>{error}</p>}
+			<RequireAuth
+				mode={false}
+				fallback={
+					<p>
+						You are already logged in!{' '}
+						<a href="#" onClick={() => logout(() => window.location.reload())}>
+							Logout?
+						</a>
+					</p>
+				}
+			>
+				<form onSubmit={handleSubmit} className="bg-white p-4 rounded shadow grid gap-4">
+					<label>
+						<div>Username:</div>
+						<input type="text" {...getFieldProps('username')} />
+					</label>
+					<label>
+						<div>Password:</div>
+						<input type="password" {...getFieldProps('password')} />
+					</label>
+					<div>
+						<button type="submit">Login</button>
+					</div>
+				</form>
+				{error && <p>{error}</p>}
+			</RequireAuth>
 			<Link to="/">Home</Link>
-		</RequireAuth>
+		</>
 	);
 }

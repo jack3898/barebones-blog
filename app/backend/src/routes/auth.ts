@@ -27,9 +27,15 @@ router.post('/', bodyParser.json(), async (req, res) => {
 	res.cookie('auth', token, {
 		httpOnly: true,
 		secure: true,
-		sameSite: 'none'
+		sameSite: 'lax'
 	});
 
+	res.status(200);
+	res.send();
+});
+
+router.delete('/', (req, res) => {
+	res.clearCookie('auth', { path: '/' });
 	res.status(200);
 	res.send();
 });
