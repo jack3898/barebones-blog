@@ -13,8 +13,8 @@ export function PostList({ posts }: PostListProps) {
 	return (
 		<>
 			{posts.data?.pages.map((page, index) => (
-				<>
-					<div className="text-center">
+				<div key={page.cursor}>
+					<div className="text-center mb-4">
 						<span>Page {index + 1}</span>
 					</div>
 					<div key={page.cursor} className="grid gap-4">
@@ -30,7 +30,7 @@ export function PostList({ posts }: PostListProps) {
 							)
 						)}
 					</div>
-				</>
+				</div>
 			))}
 		</>
 	);
