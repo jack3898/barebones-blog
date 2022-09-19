@@ -54,8 +54,13 @@ a {
 	@apply underline underline-offset-2 text-slate-700;
 }
 
+p {
+	@apply my-4;
+}
+
 /* FORM */
-input {
+input,
+textarea {
 	@apply border rounded p-1;
 }
 
