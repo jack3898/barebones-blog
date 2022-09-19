@@ -39,7 +39,9 @@ export function PostList({ posts }: PostListProps) {
 									controls={
 										<RequireAuth>
 											<div className="mt-2 flex gap-2">
-												<DeletePostBtn id={id} posts={posts} />
+												{published ? null : (
+													<DeletePostBtn id={id} posts={posts} />
+												)}
 												<TogglePublishBtn
 													id={id}
 													published={published}

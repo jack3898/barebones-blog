@@ -76,9 +76,10 @@ export const postRouter = createRouter()
 				});
 			}
 
-			return ctx.db.post.delete({
+			return ctx.db.post.deleteMany({
 				where: {
-					id: input.id
+					id: input.id,
+					published: false
 				}
 			});
 		}
