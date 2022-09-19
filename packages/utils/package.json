@@ -6,10 +6,12 @@
 	"author": "Jack Wright",
 	"license": "ISC",
 	"dependencies": {
+		"bcrypt": "^5.0.1",
 		"dotenv": "^16.0.2",
 		"jsonwebtoken": "^8.5.1"
 	},
 	"devDependencies": {
+		"@types/bcrypt": "^5.0.0",
 		"@types/jsonwebtoken": "^8.5.9"
 	}
 }

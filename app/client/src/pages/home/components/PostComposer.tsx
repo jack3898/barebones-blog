@@ -2,7 +2,7 @@ import { Card, Post } from '@blog/components/core';
 import { format } from 'date-fns';
 import { useFormik } from 'formik';
 import ReactMarkdown from 'react-markdown';
-import { useAuthContext } from 'src/Context/auth';
+import { useAuthContext } from 'src/context/auth';
 import { trpc } from 'src/trpc';
 
 export function PostComposer() {

@@ -1,10 +1,12 @@
 import { useFormik } from 'formik';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 const server = process.env.SERVER_ORIGIN!;
 
 export function LoggedOutFlow() {
 	const navigate = useNavigate();
+	const [error, setError] = useState<string | null>(null);
 
 	const { handleSubmit, getFieldProps } = useFormik({
 		initialValues: {
@@ -12,14 +14,17 @@ export function LoggedOutFlow() {
 			password: ''
 		},
 		onSubmit: async (values) => {
+			// TODO: Add abort controller in a custom fetch hook abstraction
 			fetch(`${server}/auth`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				credentials: 'include',
 				body: JSON.stringify(values)
-			});
+			}).then((res) => {
+				if (res.status === 200) return void navigate('/');
 
-			navigate('/');
+				setError('Incorrect username or password');
+			});
 		}
 	});
 
@@ -39,6 +44,7 @@ export function LoggedOutFlow() {
 					<button type="submit">Login</button>
 				</div>
 			</form>
+			{error && <p>{error}</p>}
 			<Link to="/">Home</Link>
 		</>
 	);

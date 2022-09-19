@@ -1,5 +1,5 @@
 import { Container } from '@blog/components/core';
-import { useAuthContext } from 'src/Context/auth';
+import { useAuthContext } from 'src/context/auth';
 import { LoggedInFlow } from './components/LoggedInFlow';
 import { LoggedOutFlow } from './components/LoggedOutFlow';
 
