@@ -1,6 +1,5 @@
 import { Container } from '@blog/components/core';
 import { useInView } from 'react-intersection-observer';
-import { useLogout } from 'src/hooks/useLogout';
 import { trpc } from 'src/trpc';
 import { PostComposer } from './components/PostComposer';
 import { PostList } from './components/PostList';
@@ -11,7 +10,6 @@ export default function Home() {
 	});
 	const hasNextPage = !!posts.data?.pages[posts.data.pages.length - 1].cursor;
 	const { ref, inView } = useInView();
-	const [logout] = useLogout();
 
 	if (inView && hasNextPage) {
 		posts.fetchNextPage();
@@ -20,7 +18,7 @@ export default function Home() {
 	return (
 		<Container className="grid gap-4 px-4">
 			<h1>Posts</h1>
-			<PostComposer />
+			<PostComposer posts={posts} />
 			<PostList posts={posts} />
 			{/* Infinite scroll trigger */}
 			<i ref={ref} />

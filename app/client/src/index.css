@@ -58,6 +58,10 @@ p {
 	@apply my-4;
 }
 
+code {
+	@apply bg-gray-100 rounded border inline-block p-1 text-gray-700;
+}
+
 /* FORM */
 input,
 textarea {

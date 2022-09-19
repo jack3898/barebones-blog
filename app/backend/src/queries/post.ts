@@ -64,4 +64,23 @@ export const postRouter = createRouter()
 				}
 			});
 		}
+	})
+	.mutation('delete-post', {
+		input: z.object({
+			id: z.string()
+		}),
+		resolve({ ctx, input }) {
+			if (!ctx.loggedInUser) {
+				throw new TRPCError({
+					code: 'UNAUTHORIZED',
+					message: 'You must be logged in to delete a post!'
+				});
+			}
+
+			return ctx.db.post.delete({
+				where: {
+					id: input.id
+				}
+			});
+		}
 	});

@@ -1,6 +1,6 @@
-import { Post } from '@blog/components/core';
+import { Markdown, Post } from '@blog/components/core';
 import { format } from 'date-fns';
-import ReactMarkdown from 'react-markdown';
+import { RequireAuth } from 'src/components';
 import { trpc } from 'src/trpc';
 
 type PostListProps = {
@@ -8,6 +8,8 @@ type PostListProps = {
 };
 
 export function PostList({ posts }: PostListProps) {
+	const deletePostMutation = trpc.useMutation(['delete-post']);
+
 	if (!posts.data) return null;
 
 	return (
@@ -16,15 +18,33 @@ export function PostList({ posts }: PostListProps) {
 				<div key={page.cursor}>
 					<div key={page.cursor} className="grid gap-4">
 						{page.items.map(
-							({ id, title, content, created, author: { firstname, lastname } }) => (
-								<Post
-									key={id}
-									title={title}
-									content={<ReactMarkdown>{content}</ReactMarkdown>}
-									created={format(new Date(created), 'dd-MM-yyyy HH:mm')}
-									author={`${firstname} ${lastname}`}
-								/>
-							)
+							({ id, title, content, created, author: { firstname, lastname } }) => {
+								return (
+									<Post
+										key={id}
+										title={title}
+										content={<Markdown>{content}</Markdown>}
+										created={format(new Date(created), 'dd-MM-yyyy HH:mm')}
+										author={`${firstname} ${lastname}`}
+										controls={
+											<RequireAuth>
+												<div className="mt-2">
+													<button
+														onClick={async () => {
+															deletePostMutation
+																.mutateAsync({ id })
+																.then(() => posts.refetch())
+																.catch(console.error);
+														}}
+													>
+														Delete
+													</button>
+												</div>
+											</RequireAuth>
+										}
+									/>
+								);
+							}
 						)}
 					</div>
 				</div>

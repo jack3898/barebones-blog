@@ -1,24 +1,33 @@
-import { Card, Post } from '@blog/components/core';
+import { Card, Markdown, Post } from '@blog/components/core';
 import { format } from 'date-fns';
 import { useFormik } from 'formik';
-import ReactMarkdown from 'react-markdown';
 import { RequireAuth } from 'src/components';
 import { useAuthContext } from 'src/context';
 import { trpc } from 'src/trpc';
 
-export function PostComposer() {
+type PostComposerProps = {
+	posts: ReturnType<typeof trpc.useInfiniteQuery<'posts'>>;
+};
+
+export function PostComposer({ posts }: PostComposerProps) {
 	const createPostMutation = trpc.useMutation(['create-post']);
 	const { loggedInUser } = useAuthContext();
-	const { handleSubmit, getFieldProps, values } = useFormik({
+	const { handleSubmit, getFieldProps, values, resetForm } = useFormik({
 		initialValues: {
 			title: '',
 			content: '',
 			published: true
 		},
-		onSubmit: (values) => {
-			createPostMutation.mutate(values);
-
-			window.location.reload();
+		onSubmit(values) {
+			try {
+				createPostMutation
+					.mutateAsync(values)
+					.then(() => posts.refetch())
+					.then(() => resetForm())
+					.catch(console.error);
+			} catch (error) {
+				console.error(error);
+			}
 		}
 	});
 
@@ -55,9 +64,7 @@ export function PostComposer() {
 						<strong>Preview</strong>{' '}
 						<Post
 							title={values.title || 'No title yet!'}
-							content={
-								<ReactMarkdown>{values.content || 'No content yet!'}</ReactMarkdown>
-							}
+							content={<Markdown>{values.content || 'No content yet!'}</Markdown>}
 							created={format(new Date(), 'dd-MM-yyyy HH:mm')}
 							author={`${loggedInUser?.firstname} ${loggedInUser?.lastname}`}
 						/>
