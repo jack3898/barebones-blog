@@ -14,7 +14,7 @@ export const postRouter = createRouter()
 
 			const items = await ctx.db.post.findMany({
 				where: {
-					published: true
+					published: ctx.loggedInUser ? undefined : true
 				},
 				orderBy: {
 					created: 'desc'
@@ -44,14 +44,13 @@ export const postRouter = createRouter()
 	.mutation('create-post', {
 		input: z.object({
 			title: z.string(),
-			content: z.string(),
-			published: z.boolean()
+			content: z.string()
 		}),
 		resolve({ ctx, input }) {
 			if (!ctx.loggedInUser) {
 				throw new TRPCError({
 					code: 'UNAUTHORIZED',
-					message: 'You must be logged in to create a new post!'
+					message: 'You must be logged in to create a new post'
 				});
 			}
 
@@ -59,7 +58,7 @@ export const postRouter = createRouter()
 				data: {
 					title: input.title,
 					content: input.content,
-					published: input.published,
+					published: false,
 					userId: ctx.loggedInUser.id
 				}
 			});
@@ -73,13 +72,36 @@ export const postRouter = createRouter()
 			if (!ctx.loggedInUser) {
 				throw new TRPCError({
 					code: 'UNAUTHORIZED',
-					message: 'You must be logged in to delete a post!'
+					message: 'You must be logged in to delete a post'
 				});
 			}
 
 			return ctx.db.post.delete({
 				where: {
 					id: input.id
+				}
+			});
+		}
+	})
+	.mutation('publish-post', {
+		input: z.object({
+			id: z.string(),
+			published: z.boolean()
+		}),
+		resolve({ ctx, input }) {
+			if (!ctx.loggedInUser) {
+				throw new TRPCError({
+					code: 'UNAUTHORIZED',
+					message: 'You must be logged in to publish/unpublish a post'
+				});
+			}
+
+			return ctx.db.post.update({
+				where: {
+					id: input.id
+				},
+				data: {
+					published: input.published
 				}
 			});
 		}

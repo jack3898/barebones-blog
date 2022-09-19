@@ -41,7 +41,9 @@ export function LoginForm() {
 						<input type="password" {...getFieldProps('password')} />
 					</label>
 					<div>
-						<button type="submit">Login</button>
+						<button type="submit" className="primary">
+							Login
+						</button>
 					</div>
 				</form>
 				{error && <p>{error}</p>}

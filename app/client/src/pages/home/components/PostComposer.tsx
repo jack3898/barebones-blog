@@ -15,8 +15,7 @@ export function PostComposer({ posts }: PostComposerProps) {
 	const { handleSubmit, getFieldProps, values, resetForm } = useFormik({
 		initialValues: {
 			title: '',
-			content: '',
-			published: true
+			content: ''
 		},
 		onSubmit(values) {
 			try {
@@ -52,9 +51,10 @@ export function PostComposer({ posts }: PostComposerProps) {
 							{...getFieldProps('content')}
 						></textarea>
 					</label>
-					<input type="hidden" {...getFieldProps('published')} />
 					<div>
-						<button type="submit">Publish</button>
+						<button type="submit" className="primary">
+							Submit
+						</button>
 					</div>
 				</form>
 			</Card>

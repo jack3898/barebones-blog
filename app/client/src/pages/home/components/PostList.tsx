@@ -2,6 +2,8 @@ import { Markdown, Post } from '@blog/components/core';
 import { format } from 'date-fns';
 import { RequireAuth } from 'src/components';
 import { trpc } from 'src/trpc';
+import { DeletePostBtn } from './DeletePostBtn';
+import { TogglePublishBtn } from './TogglePublishBtn';
 
 type PostListProps = {
 	posts: ReturnType<typeof trpc.useInfiniteQuery<'posts'>>;
@@ -9,6 +11,7 @@ type PostListProps = {
 
 export function PostList({ posts }: PostListProps) {
 	const deletePostMutation = trpc.useMutation(['delete-post']);
+	const publishPostMutation = trpc.useMutation(['publish-post']);
 
 	if (!posts.data) return null;
 
@@ -17,7 +20,14 @@ export function PostList({ posts }: PostListProps) {
 			{posts.data?.pages.map((page, index) => (
 				<div key={index} className="grid gap-4">
 					{page.items.map(
-						({ id, title, content, created, author: { firstname, lastname } }) => {
+						({
+							id,
+							title,
+							content,
+							created,
+							published,
+							author: { firstname, lastname }
+						}) => {
 							return (
 								<Post
 									key={id}
@@ -27,17 +37,13 @@ export function PostList({ posts }: PostListProps) {
 									author={`${firstname} ${lastname}`}
 									controls={
 										<RequireAuth>
-											<div className="mt-2">
-												<button
-													onClick={async () => {
-														deletePostMutation
-															.mutateAsync({ id })
-															.then(() => posts.refetch())
-															.catch(console.error);
-													}}
-												>
-													Delete
-												</button>
+											<div className="mt-2 flex gap-2">
+												<DeletePostBtn id={id} posts={posts} />
+												<TogglePublishBtn
+													id={id}
+													published={published}
+													posts={posts}
+												/>
 											</div>
 										</RequireAuth>
 									}
