@@ -15,6 +15,7 @@ export function PostList({ posts }: PostListProps) {
 
 	return (
 		<>
+			{/* TODO: Reduce this boilerplate with a reducer or something */}
 			{posts.data?.pages.map((page, index) => (
 				<div key={index} className="grid gap-4">
 					{page.items.map(

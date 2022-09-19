@@ -19,15 +19,11 @@ export function PostComposer({ posts }: PostComposerProps) {
 			content: ''
 		},
 		onSubmit(values) {
-			try {
-				createPostMutation
-					.mutateAsync(values)
-					.then(() => posts.refetch())
-					.then(() => resetForm())
-					.catch(console.error);
-			} catch (error) {
-				console.error(error);
-			}
+			createPostMutation
+				.mutateAsync(values)
+				.then(() => posts.refetch())
+				.then(() => resetForm())
+				.catch(console.error);
 		}
 	});
 
