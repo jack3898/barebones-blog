@@ -1,4 +1,5 @@
 import { Markdown, Post } from '@blog/components/core';
+import { DATE_TIME } from '@blog/constants/browser';
 import { format } from 'date-fns';
 import { RequireAuth } from 'src/components';
 import { trpc } from 'src/trpc';
@@ -33,7 +34,7 @@ export function PostList({ posts }: PostListProps) {
 									key={id}
 									title={title}
 									content={<Markdown>{content}</Markdown>}
-									created={format(new Date(created), 'dd-MM-yyyy HH:mm')}
+									created={format(new Date(created), DATE_TIME)}
 									author={`${firstname} ${lastname}`}
 									controls={
 										<RequireAuth>

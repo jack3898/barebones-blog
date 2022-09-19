@@ -9,6 +9,7 @@
 	"license": "ISC",
 	"dependencies": {
 		"@blog/components": "*",
+		"@blog/constants": "^1.0.0",
 		"@trpc/client": "^9.27.2",
 		"@trpc/react": "^9.27.2",
 		"date-fns": "^2.29.3",

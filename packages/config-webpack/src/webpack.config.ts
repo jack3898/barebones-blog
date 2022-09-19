@@ -1,4 +1,4 @@
-import { ROOT } from '@blog/constants';
+import { ROOT } from '@blog/constants/node';
 import { rootenv } from '@blog/utils';
 import Dotenv from 'dotenv-webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';

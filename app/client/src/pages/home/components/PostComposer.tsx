@@ -1,4 +1,5 @@
 import { Card, Markdown, Post } from '@blog/components/core';
+import { DATE_TIME } from '@blog/constants/browser';
 import { format } from 'date-fns';
 import { useFormik } from 'formik';
 import { RequireAuth } from 'src/components';
@@ -61,11 +62,11 @@ export function PostComposer({ posts }: PostComposerProps) {
 			{(values.title || values.content) && (
 				<div className="p-2 bg-gray-600 bg-opacity-5 rounded shadow grid gap-4">
 					<>
-						<strong>Preview</strong>{' '}
+						<strong>Preview</strong>
 						<Post
 							title={values.title || 'No title yet!'}
 							content={<Markdown>{values.content || 'No content yet!'}</Markdown>}
-							created={format(new Date(), 'dd-MM-yyyy HH:mm')}
+							created={format(new Date(), DATE_TIME)}
 							author={`${loggedInUser?.firstname} ${loggedInUser?.lastname}`}
 						/>
 					</>

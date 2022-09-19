@@ -1,11 +1,7 @@
 {
 	"name": "@blog/constants",
 	"version": "1.0.0",
-	"description": "",
-	"main": "src/index.js",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
+	"description": "Constants for the app.",
 	"author": "Jack Wright",
 	"license": "ISC"
 }

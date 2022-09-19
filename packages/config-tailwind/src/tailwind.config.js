@@ -1,5 +1,5 @@
 const path = require('path');
-const { ROOT } = require('@blog/constants');
+const { ROOT } = require('@blog/constants/node');
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 const locations = ['app/client', 'packages/components'];

@@ -1,4 +1,4 @@
-import { ROOT } from '@blog/constants';
+import { ROOT } from '@blog/constants/node';
 import dotenv from 'dotenv';
 import path from 'path';
 
