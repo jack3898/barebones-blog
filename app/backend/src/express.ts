@@ -18,7 +18,7 @@ export default function server() {
 	app.use(cookieParser());
 
 	app.listen(port, () => {
-		console.log(`Site address:	${process.env.CLIENT_ORIGIN}`);
+		console.log(`CORS address:	${process.env.CLIENT_ORIGIN}`);
 		console.log(`Backend address:	${process.env.SERVER_ORIGIN}`);
 	});
 }

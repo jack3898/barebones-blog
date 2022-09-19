@@ -1,29 +1,27 @@
-import { Container, Post } from '@blog/components/core';
-import { format } from 'date-fns';
-import ReactMarkdown from 'react-markdown';
-import { useAuthContext } from 'src/Context/auth';
+import { Container } from '@blog/components/core';
+import { useInView } from 'react-intersection-observer';
 import { trpc } from 'src/trpc';
-import { Compose } from './components/Compose';
+import { PostComposer } from './components/PostComposer';
+import { PostList } from './components/PostList';
 
 export default function Home() {
-	const posts = trpc.useQuery(['posts']);
-	const { loggedInUser } = useAuthContext();
+	const posts = trpc.useInfiniteQuery(['posts', { limit: 10 }], {
+		getNextPageParam: ({ cursor }) => cursor
+	});
+	const hasNextPage = !!posts.data?.pages[posts.data.pages.length - 1].cursor;
+	const { ref, inView } = useInView();
 
-	if (!posts.isFetched) return null;
+	if (inView && hasNextPage) {
+		posts.fetchNextPage();
+	}
 
 	return (
-		<Container className="grid gap-8 px-4">
-			<h1>Home</h1>
-			{loggedInUser && <Compose />}
-			{posts.data?.map(({ id, title, content, created, author: { firstname, lastname } }) => (
-				<Post
-					key={id}
-					title={title}
-					content={<ReactMarkdown>{content}</ReactMarkdown>}
-					created={format(new Date(created), 'dd-MM-yyyy HH:mm')}
-					author={`${firstname} ${lastname}`}
-				/>
-			))}
+		<Container className="grid gap-4 px-4">
+			<h1>Posts</h1>
+			<PostComposer />
+			<PostList posts={posts} />
+			{/* Infinite scroll trigger */}
+			<i ref={ref} />
 		</Container>
 	);
 }

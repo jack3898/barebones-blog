@@ -4,8 +4,15 @@ import { createRouter } from '../trpcRouter';
 
 export const postRouter = createRouter()
 	.query('posts', {
-		resolve({ ctx }) {
-			return ctx.db.post.findMany({
+		input: z.object({
+			limit: z.number().nullish(),
+			cursor: z.string().nullish()
+		}),
+		async resolve({ ctx, input }) {
+			const limit = input.limit || 10;
+			let cursor: string | null = null;
+
+			const items = await ctx.db.post.findMany({
 				where: {
 					published: true
 				},
@@ -19,8 +26,19 @@ export const postRouter = createRouter()
 							lastname: true
 						}
 					}
-				}
+				},
+				take: limit + 1, // one more for the cursor
+				cursor: input.cursor ? { id: input.cursor } : undefined
 			});
+
+			if (items.length > limit) {
+				cursor = items.pop()?.id || null;
+			}
+
+			return {
+				items,
+				cursor
+			};
 		}
 	})
 	.mutation('create-post', {

@@ -5,7 +5,7 @@ import ReactMarkdown from 'react-markdown';
 import { useAuthContext } from 'src/Context/auth';
 import { trpc } from 'src/trpc';
 
-export function Compose() {
+export function PostComposer() {
 	const createPostMutation = trpc.useMutation(['create-post']);
 	const { loggedInUser } = useAuthContext();
 	const { handleSubmit, getFieldProps, values, resetForm } = useFormik({
@@ -20,6 +20,8 @@ export function Compose() {
 			resetForm();
 		}
 	});
+
+	if (!loggedInUser) return null;
 
 	return (
 		<>
