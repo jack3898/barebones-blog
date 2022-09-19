@@ -11,9 +11,6 @@ type PostListProps = {
 };
 
 export function PostList({ posts }: PostListProps) {
-	const deletePostMutation = trpc.useMutation(['delete-post']);
-	const publishPostMutation = trpc.useMutation(['publish-post']);
-
 	if (!posts.data) return null;
 
 	return (
