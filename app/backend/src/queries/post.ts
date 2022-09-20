@@ -68,12 +68,10 @@ export const postRouter = createRouter()
 
 			return ctx.db.post.upsert({
 				where: {
-					id: input.id || undefined
+					id: input.id || ''
 				},
 				update: {
-					id: input.id!,
 					content: input.content,
-					published: false,
 					userId: ctx.loggedInUser.id
 				},
 				create: {
