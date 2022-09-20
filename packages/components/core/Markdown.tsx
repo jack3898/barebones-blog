@@ -15,7 +15,9 @@ export function Markdown(props: MarkdownProps) {
 				h6: 'h6',
 				img: ({ node, ...props }) => (
 					<img className="max-h-96 w-full object-contain bg-gray-100 p-2" {...props} />
-				)
+				),
+				ul: ({ node, ...props }) => <ul className="pl-6 list-disc" {...props} />,
+				ol: ({ node, ...props }) => <ul className="pl-6 list-decimal" {...props} />
 			}}
 			{...props}
 		>

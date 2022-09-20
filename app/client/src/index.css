@@ -58,13 +58,27 @@ p {
 	@apply my-4;
 }
 
+p + h1,
+p + h2 {
+	@apply mt-8;
+}
+
+p + h3,
+p + h4 {
+	@apply mt-6 text-gray-600;
+}
+
+p + h5,
+p + h6 {
+	@apply mt-4 text-gray-500;
+}
+
 code {
 	@apply bg-gray-100 rounded border inline-block p-1 text-gray-700;
 }
 
 /* FORM */
-input,
-textarea {
+input {
 	@apply border rounded p-1;
 }
 

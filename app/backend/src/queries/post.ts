@@ -43,7 +43,6 @@ export const postRouter = createRouter()
 	})
 	.mutation('create-post', {
 		input: z.object({
-			title: z.string(),
 			content: z.string()
 		}),
 		resolve({ ctx, input }) {
@@ -56,7 +55,6 @@ export const postRouter = createRouter()
 
 			return ctx.db.post.create({
 				data: {
-					title: input.title,
 					content: input.content,
 					published: false,
 					userId: ctx.loggedInUser.id

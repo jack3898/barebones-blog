@@ -1,6 +1,4 @@
-import { Card, Markdown, Post } from '@blog/components/core';
-import { DATE_TIME } from '@blog/constants/browser';
-import { format } from 'date-fns';
+import { Card, Markdown } from '@blog/components/core';
 import { useFormik } from 'formik';
 import { RequireAuth } from 'src/components';
 import { useAuthContext } from 'src/context';
@@ -15,7 +13,6 @@ export function PostComposer({ posts }: PostComposerProps) {
 	const { loggedInUser } = useAuthContext();
 	const { handleSubmit, getFieldProps, values, resetForm } = useFormik({
 		initialValues: {
-			title: '',
 			content: ''
 		},
 		onSubmit(values) {
@@ -30,21 +27,12 @@ export function PostComposer({ posts }: PostComposerProps) {
 	return (
 		<RequireAuth>
 			<Card className="p-4 grid gap-4">
-				<strong>Create a new post</strong>
 				<form className="grid gap-4" onSubmit={handleSubmit}>
 					<label>
-						<div>Title</div>
-						<input
-							type="text"
-							{...getFieldProps('title')}
-							className="max-w-2xl w-full"
-						/>
-					</label>
-					<label>
-						<div>Content (markdown)</div>
 						<textarea
-							className="w-full"
+							className="w-full bg-gray-100 rounded p-2"
 							rows={6}
+							placeholder="Write something interesting... 🤔"
 							{...getFieldProps('content')}
 						></textarea>
 					</label>
@@ -54,20 +42,15 @@ export function PostComposer({ posts }: PostComposerProps) {
 						</button>
 					</div>
 				</form>
-			</Card>
-			{(values.title || values.content) && (
-				<div className="p-2 bg-gray-600 bg-opacity-5 rounded shadow grid gap-4">
+				{values.content && (
 					<>
-						<strong>Preview</strong>
-						<Post
-							title={values.title || 'No title yet!'}
-							content={<Markdown>{values.content || 'No content yet!'}</Markdown>}
-							created={format(new Date(), DATE_TIME)}
-							author={`${loggedInUser?.firstname} ${loggedInUser?.lastname}`}
-						/>
+						<hr />
+						<div>
+							<Markdown>{values.content}</Markdown>
+						</div>
 					</>
-				</div>
-			)}
+				)}
+			</Card>
 		</RequireAuth>
 	);
 }
