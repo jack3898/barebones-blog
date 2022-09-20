@@ -41,20 +41,42 @@ export const postRouter = createRouter()
 			};
 		}
 	})
+	.mutation('post', {
+		input: z.object({
+			id: z.string()
+		}),
+		resolve({ ctx, input }) {
+			return ctx.db.post.findUnique({
+				where: {
+					id: input.id
+				}
+			});
+		}
+	})
 	.mutation('create-post', {
 		input: z.object({
+			id: z.string().nullish(),
 			content: z.string()
 		}),
 		resolve({ ctx, input }) {
 			if (!ctx.loggedInUser) {
 				throw new TRPCError({
 					code: 'UNAUTHORIZED',
-					message: 'You must be logged in to create a new post'
+					message: 'You must be logged in to create or update a post'
 				});
 			}
 
-			return ctx.db.post.create({
-				data: {
+			return ctx.db.post.upsert({
+				where: {
+					id: input.id || undefined
+				},
+				update: {
+					id: input.id!,
+					content: input.content,
+					published: false,
+					userId: ctx.loggedInUser.id
+				},
+				create: {
 					content: input.content,
 					published: false,
 					userId: ctx.loggedInUser.id

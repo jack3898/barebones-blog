@@ -4,6 +4,7 @@ import { format } from 'date-fns';
 import { RequireAuth } from 'src/components';
 import { trpc } from 'src/trpc';
 import { DeletePostBtn } from './DeletePostBtn';
+import { EditPostBtn } from './EditPostBtn';
 import { TogglePublishBtn } from './TogglePublishBtn';
 
 type PostListProps = {
@@ -28,15 +29,21 @@ export function PostList({ posts }: PostListProps) {
 									author={`${firstname} ${lastname}`}
 									controls={
 										<RequireAuth>
-											<div className="mt-2 flex gap-2">
+											<div className="mt-2 flex gap-2 justify-between">
+												<div className="flex gap-2">
+													<TogglePublishBtn
+														id={id}
+														published={published}
+														posts={posts}
+													/>
+													<EditPostBtn id={id} />
+												</div>
+
 												{published ? null : (
-													<DeletePostBtn id={id} posts={posts} />
+													<div className="text-right">
+														<DeletePostBtn id={id} posts={posts} />
+													</div>
 												)}
-												<TogglePublishBtn
-													id={id}
-													published={published}
-													posts={posts}
-												/>
 											</div>
 										</RequireAuth>
 									}
