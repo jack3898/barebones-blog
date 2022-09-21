@@ -3,9 +3,9 @@ import { DATE_TIME } from '@blog/constants/browser';
 import { format } from 'date-fns';
 import { RequireAuth } from 'src/components';
 import { trpc } from 'src/trpc';
-import { DeletePostBtn } from './DeletePostBtn';
-import { EditPostBtn } from './EditPostBtn';
-import { TogglePublishBtn } from './TogglePublishBtn';
+import { DeletePostBtn } from './form/DeletePostBtn';
+import { EditPostBtn } from './form/EditPostBtn';
+import { TogglePublishBtn } from './form/TogglePublishBtn';
 
 type PostListProps = {
 	posts: ReturnType<typeof trpc.useInfiniteQuery<'posts'>>;
@@ -38,12 +38,13 @@ export function PostList({ posts }: PostListProps) {
 													/>
 													<EditPostBtn id={id} />
 												</div>
-
-												{published ? null : (
-													<div className="text-right">
-														<DeletePostBtn id={id} posts={posts} />
-													</div>
-												)}
+												<div className="text-right">
+													<DeletePostBtn
+														show={!published}
+														id={id}
+														posts={posts}
+													/>
+												</div>
 											</div>
 										</RequireAuth>
 									}

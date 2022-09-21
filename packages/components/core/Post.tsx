@@ -14,8 +14,8 @@ export function Post({ content, created, author, controls }: PostProps) {
 				<div>{content}</div>
 				<small>
 					By {author}, {created}
-					{controls ? <div>{controls}</div> : null}
 				</small>
+				{controls ? <div>{controls}</div> : null}
 			</article>
 		</Card>
 	);

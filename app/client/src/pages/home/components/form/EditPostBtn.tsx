@@ -10,7 +10,20 @@ export function EditPostBtn({ id }: EditPostBtnProps) {
 	if (searchParams.edit === id) return null;
 
 	return (
-		<button className="primary" onClick={() => updateSearchParams('set', 'edit', id)}>
+		<button
+			className="primary"
+			onClick={() => {
+				if (searchParams.edit) {
+					const result = confirm(
+						'You are already editing something else. Discard changes?'
+					);
+
+					if (!result) return;
+				}
+
+				updateSearchParams('set', 'edit', id);
+			}}
+		>
 			Edit
 		</button>
 	);

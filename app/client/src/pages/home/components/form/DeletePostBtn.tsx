@@ -2,11 +2,14 @@ import { trpc } from 'src/trpc';
 
 type DeletePostBtnProps = {
 	id: string;
+	show: boolean;
 	posts: ReturnType<typeof trpc.useInfiniteQuery<'posts'>>;
 };
 
-export function DeletePostBtn({ id, posts }: DeletePostBtnProps) {
+export function DeletePostBtn({ id, show, posts }: DeletePostBtnProps) {
 	const deletePostMutation = trpc.useMutation(['delete-post']);
+
+	if (!show) return null;
 
 	return (
 		<button
