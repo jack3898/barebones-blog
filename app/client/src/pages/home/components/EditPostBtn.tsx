@@ -1,21 +1,16 @@
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParamsContext } from 'src/context/searchParams';
 
 type EditPostBtnProps = {
 	id: string;
 };
 
 export function EditPostBtn({ id }: EditPostBtnProps) {
-	const [searchParams, setSearchParams] = useSearchParams();
+	const [searchParams, updateSearchParams] = useSearchParamsContext();
+
+	if (searchParams.edit === id) return null;
 
 	return (
-		<button
-			className="primary"
-			onClick={() => {
-				searchParams.set('edit', id);
-				setSearchParams(searchParams);
-				window.location.reload(); // TODO: Find out how to remove this
-			}}
-		>
+		<button className="primary" onClick={() => updateSearchParams('set', 'edit', id)}>
 			Edit
 		</button>
 	);

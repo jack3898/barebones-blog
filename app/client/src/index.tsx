@@ -6,6 +6,7 @@ import { App } from './App';
 import { AuthContextProvider } from './context';
 import { queryClient, trpc, useTrpcClient } from './trpc';
 
+import { SearchParamsProvider } from './context/searchParams';
 import './index.css';
 
 function Main() {
@@ -18,7 +19,9 @@ function Main() {
 				<AuthContextProvider>
 					<Suspense>
 						<BrowserRouter>
-							<App />
+							<SearchParamsProvider>
+								<App />
+							</SearchParamsProvider>
 						</BrowserRouter>
 					</Suspense>
 				</AuthContextProvider>

@@ -1,8 +1,9 @@
 import { Card, Markdown } from '@blog/components/core';
 import { useFormik } from 'formik';
 import { useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { RequireAuth } from 'src/components';
+import { useSearchParamsContext } from 'src/context/searchParams';
 import { trpc } from 'src/trpc';
 
 type PostComposerProps = {
@@ -10,14 +11,14 @@ type PostComposerProps = {
 };
 
 export function PostComposer({ posts }: PostComposerProps) {
-	const [searchParams] = useSearchParams();
+	const [searchParams, updateSearchParams] = useSearchParamsContext();
 	const createPostMutation = trpc.useMutation(['create-post']);
 	const post = trpc.useMutation(['post']);
 	const navigate = useNavigate();
 
 	const { handleSubmit, getFieldProps, values, resetForm, setValues } = useFormik({
 		initialValues: {
-			id: searchParams.get('edit') || undefined,
+			id: searchParams.edit || '',
 			content: post.data?.content || ''
 		},
 		onSubmit(values) {
@@ -33,12 +34,14 @@ export function PostComposer({ posts }: PostComposerProps) {
 	});
 
 	useEffect(() => {
-		if (searchParams.get('edit')) {
-			post.mutateAsync({ id: searchParams.get('edit')! }).then((res) => {
-				setValues({ id: res?.id, content: res?.content! });
+		if (searchParams.edit) {
+			post.mutateAsync({ id: searchParams.edit }).then((res) => {
+				setValues({ id: res?.id || '', content: res?.content! });
 			});
+		} else {
+			resetForm();
 		}
-	}, []);
+	}, [searchParams.edit]);
 
 	return (
 		<RequireAuth>
@@ -53,10 +56,24 @@ export function PostComposer({ posts }: PostComposerProps) {
 							{...getFieldProps('content')}
 						></textarea>
 					</label>
-					<div>
+					<div className="flex gap-2">
 						<button type="submit" className="primary">
-							Submit
+							{searchParams.edit ? 'Submit edit' : 'Submit'}
 						</button>
+						{searchParams.edit && (
+							<button
+								className="danger"
+								type="button"
+								onClick={() => {
+									const response = confirm(
+										'Are you sure you want to discard your edit changes?'
+									);
+									if (response) updateSearchParams('delete', 'edit');
+								}}
+							>
+								Cancel edit
+							</button>
+						)}
 					</div>
 				</form>
 				{values.content && (
