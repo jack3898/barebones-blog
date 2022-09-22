@@ -1,3 +1,4 @@
 import { server } from '@blog/config-webpack';
+import { webpackClientConfig } from './app.build';
 
-server().start();
+server(undefined, webpackClientConfig).start();

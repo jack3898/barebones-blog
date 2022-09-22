@@ -1,0 +1,25 @@
+FROM node:18-bullseye AS build
+
+WORKDIR /home/node
+
+COPY . .
+
+ARG NODE_ENV
+ARG CLIENT_ORIGIN
+ARG SERVER_ORIGIN
+
+ENV NODE_ENV=${NODE_ENV}
+ENV CLIENT_ORIGIN=${CLIENT_ORIGIN}
+ENV SERVER_ORIGIN=${SERVER_ORIGIN}
+
+RUN yarn install --ignore-scripts
+RUN yarn run build
+
+FROM nginx
+
+COPY --from=build /home/node/dist/client /usr/share/nginx/html
+COPY .nginx/default.conf.template /etc/nginx/templates/default.conf.template
+
+EXPOSE 3000
+
+CMD ["nginx", "-g", "daemon off;"]

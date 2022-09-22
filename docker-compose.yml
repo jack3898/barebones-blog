@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+    backend:
+        container_name: backend
+        build:
+            context: .
+            dockerfile: .docker/dockerfile.backend
+        ports:
+            - 5000:5000
+        environment:
+            - NODE_ENV=production
+            - JWT_SECRET=changeme
+            - CLIENT_ORIGIN=http://localhost:3000
+            - SERVER_ORIGIN=http://localhost:5000
+            - DATABASE_URL=file:./prod.db
+    client:
+        container_name: client
+        build:
+            context: .
+            dockerfile: .docker/dockerfile.client
+            args:
+                - NODE_ENV=production
+                - CLIENT_ORIGIN=http://localhost:3000
+                - SERVER_ORIGIN=http://localhost:5000
+        ports:
+            - 3000:3000

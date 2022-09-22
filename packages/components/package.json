@@ -13,6 +13,7 @@
 		"react-router-dom": "^6.4.0"
 	},
 	"dependencies": {
+		"@blog/config-ts": "*",
 		"react-markdown": "^8.0.3"
 	}
 }

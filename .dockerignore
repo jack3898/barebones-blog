@@ -1,0 +1,8 @@
+node_modules
+yarn-error.lock
+.prettierrc.json
+.vscode
+.docker
+dist
+.env
+*.db

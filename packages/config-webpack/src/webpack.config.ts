@@ -1,14 +1,10 @@
 import { ROOT } from '@blog/constants/node';
 import { rootenv } from '@blog/utils';
-import Dotenv from 'dotenv-webpack';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
 import path from 'path';
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 import { Configuration as WebpackConfig } from 'webpack';
 
 rootenv();
-
-const APP_DIR = path.resolve();
 
 const webpackConfig: WebpackConfig = {
 	mode: process.env.NODE_ENV as any,
@@ -19,16 +15,16 @@ const webpackConfig: WebpackConfig = {
 	},
 	resolveLoader: { modules: [path.resolve(ROOT, 'node_modules')] },
 	performance: { hints: false },
-	output: {
-		path: path.resolve(APP_DIR, 'dist'),
-		filename: 'bundle.js'
-	},
 	module: {
 		rules: [
 			{
-				test: /\.tsx?$/,
-				loader: 'ts-loader',
-				exclude: /node_modules/
+				test: /\.ts?x?$/,
+				use: [
+					{
+						loader: 'ts-loader',
+						options: { transpileOnly: true }
+					}
+				]
 			},
 			{
 				test: /\.(jpe?g|png|gif|svg)$/i,
@@ -53,11 +49,7 @@ const webpackConfig: WebpackConfig = {
 				]
 			}
 		]
-	},
-	plugins: [
-		new HtmlWebpackPlugin({ template: path.resolve(APP_DIR, 'src', 'index.html') }),
-		new Dotenv({ systemvars: true, path: path.resolve(ROOT, '.env') })
-	]
+	}
 };
 
 export default webpackConfig;

@@ -1,0 +1,22 @@
+FROM node:18-bullseye AS build
+
+WORKDIR /home/node
+
+COPY . .
+
+RUN yarn install --ignore-scripts
+
+# Prunes backend and its deps into /home/node/dist/backend
+RUN yarn run prune
+
+FROM node:18-bullseye
+
+WORKDIR /home/node
+
+COPY --from=build --chown=node:node /home/node/dist/backend .
+
+RUN yarn install
+
+EXPOSE 5000
+
+CMD ["yarn", "run", "dev"]

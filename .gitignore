@@ -3,3 +3,5 @@ dist
 .env
 .turbo
 *.db
+package-lock.json
+yarn-error.log
