@@ -3,10 +3,10 @@ import { Configuration as DevServerConfig } from 'webpack-dev-server';
 
 rootenv();
 
-const url = new URL(process.env.CLIENT_ORIGIN!);
+const port = process.env.DOCKER ? process.env.CLIENT_INT_PORT : process.env.CLIENT_DEV_PORT;
 
 const devServerConfig: DevServerConfig = {
-	port: url.port,
+	port,
 	static: { directory: 'assets' },
 	hot: true,
 	historyApiFallback: true

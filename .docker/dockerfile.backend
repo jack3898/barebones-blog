@@ -13,8 +13,12 @@ WORKDIR /home/node
 
 COPY --from=pruner --chown=node:node /home/node/dist/backend .
 
+ARG DATABASE_URL
+
+ENV DATABASE_URL=${DATABASE_URL}
+
 RUN yarn install
 
-EXPOSE 5000
+EXPOSE ${CLIENT_INT_PORT}
 
 CMD ["yarn", "run", "service"]

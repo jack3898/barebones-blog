@@ -7,37 +7,46 @@ import client from '../../src/prisma';
 const router = express.Router();
 
 router.post('/', bodyParser.json(), async (req, res) => {
-	const { username, password } = req.body as Record<any, string>;
+	try {
+		const { username, password } = req.body as Record<any, string>;
 
-	const user = (await client.user.findFirst({
-		where: { username }
-	})) as Omit<User, 'password'> & { password?: string };
+		const query = client.user.findFirst({
+			where: { username }
+		});
 
-	const authenticated = await verifyHash(password, user?.password);
+		const user = (await query) as Omit<User, 'password'> & { password?: string };
+		const authenticated = await verifyHash(password, user?.password);
 
-	if (!user || !authenticated) {
+		if (!user || !authenticated) {
+			res.sendStatus(401);
+			return;
+		}
+
+		delete user.password; // Don't want this being added to the token! 😬
+
+		const token = signJwt(user);
+
+		res.cookie('auth', token, {
+			httpOnly: true,
+			secure: true,
+			sameSite: 'lax'
+		});
+
+		res.sendStatus(200);
+	} catch (error) {
 		res.sendStatus(401);
-		return;
+		console.error(error);
 	}
-
-	delete user.password; // Don't want this being added to the token! 😬
-
-	const token = signJwt(user);
-
-	res.cookie('auth', token, {
-		httpOnly: true,
-		secure: true,
-		sameSite: 'lax'
-	});
-
-	res.status(200);
-	res.send();
 });
 
 router.delete('/', (req, res) => {
-	res.clearCookie('auth', { path: '/' });
-	res.status(200);
-	res.send();
+	try {
+		res.clearCookie('auth', { path: '/' });
+		res.sendStatus(200);
+	} catch (error) {
+		console.error(error);
+		res.sendStatus(200);
+	}
 });
 
 export default router;

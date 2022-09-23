@@ -3,6 +3,7 @@ import * as trpcExpress from '@trpc/server/adapters/express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
+import { backendEnvironment } from '../httpEnvironment';
 import { authRouter } from './routes';
 import { createContext, trpcRouter } from './trpc';
 
@@ -10,15 +11,21 @@ rootenv();
 
 export default function server() {
 	const app = express();
-	const port = new URL(process.env.SERVER_ORIGIN!).port;
 
-	app.use(cors({ origin: process.env.CLIENT_ORIGIN, credentials: true }));
+	const { publicAddr, publicPort, publicEndpoint, backendInternalPort } = backendEnvironment;
+
+	app.use(
+		cors({
+			origin: `${publicAddr}:${publicPort}`,
+			credentials: true
+		})
+	);
+
+	app.use(cookieParser());
 	app.use('/trpc', trpcExpress.createExpressMiddleware({ router: trpcRouter, createContext }));
 	app.use('/auth', authRouter);
-	app.use(cookieParser());
 
-	app.listen(port, () => {
-		console.log(`CORS address:	${process.env.CLIENT_ORIGIN}`);
-		console.log(`Backend address:	${process.env.SERVER_ORIGIN}`);
+	app.listen(backendInternalPort, () => {
+		console.log('ONLINE:', `${publicAddr}:${backendInternalPort}${publicEndpoint}`);
 	});
 }

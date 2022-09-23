@@ -6,22 +6,49 @@ services:
         build:
             context: .
             dockerfile: .docker/dockerfile.backend
-        ports:
-            - 5000:5000
+            args:
+                - DATABASE_URL=${DATABASE_URL}
         environment:
-            - NODE_ENV=production
-            - JWT_SECRET=changeme
-            - CLIENT_ORIGIN=http://localhost:3000
-            - SERVER_ORIGIN=http://localhost:5000
-            - DATABASE_URL=file:./prod.db
+            - DOCKER=true
+            - NODE_ENV
+            - JWT_SECRET
+            - PUB_ADDR
+            - PUB_PORT
+            - PUB_PORT_SSL
+            - BACKEND_PUB_ENDPOINT
+            - BACKEND_INT_PORT
     client:
         container_name: client
         build:
             context: .
             dockerfile: .docker/dockerfile.client
             args:
-                - NODE_ENV=production
-                - CLIENT_ORIGIN=http://localhost:3000
-                - SERVER_ORIGIN=http://localhost:5000
+                - DOCKER=true
+                - NODE_ENV=${NODE_ENV}
+                - PUB_PORT=${PUB_PORT}
+                - PUB_PORT_SSL=${PUB_PORT_SSL}
+                - PUB_ADDR=${PUB_ADDR}
+                - BACKEND_PUB_ENDPOINT=${BACKEND_PUB_ENDPOINT}
+                - BACKEND_INT_PORT=${BACKEND_INT_PORT}
+                - CLIENT_INT_PORT=${CLIENT_INT_PORT}
+    nginx:
+        container_name: gateway
+        image: nginx
+        restart: always
+        depends_on:
+            - client
+            - backend
         ports:
-            - 3000:3000
+            - 443:443
+            - 80:80
+        volumes:
+            - ./.nginx/gateway.conf.template:/etc/nginx/templates/default.conf.template
+        environment:
+            - PUB_ADDR
+            - PUB_PORT
+            - PUB_PORT_SSL
+            - BACKEND_PUB_ENDPOINT
+            - BACKEND_INT_PORT
+            - BACKEND_INT_ADDR
+            - CLIENT_INT_PORT
+            - CLIENT_INT_ADDR

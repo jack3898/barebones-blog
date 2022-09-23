@@ -14,12 +14,18 @@ WORKDIR /home/node
 COPY --from=pruner /home/node/dist/client-pruned .
 
 ARG NODE_ENV
-ARG CLIENT_ORIGIN
-ARG SERVER_ORIGIN
+ARG PUB_PORT
+ARG PUB_PORT_SSL
+ARG PUB_ADDR
+ARG BACKEND_PUB_ENDPOINT
+ARG DOCKER
 
 ENV NODE_ENV=${NODE_ENV}
-ENV CLIENT_ORIGIN=${CLIENT_ORIGIN}
-ENV SERVER_ORIGIN=${SERVER_ORIGIN}
+ENV PUB_PORT=${PUB_PORT}
+ENV PUB_PORT_SSL=${PUB_PORT_SSL}
+ENV PUB_ADDR=${PUB_ADDR}
+ENV BACKEND_PUB_ENDPOINT=${BACKEND_PUB_ENDPOINT}
+ENV DOCKER=${DOCKER}
 
 RUN yarn install --ignore-scripts
 RUN yarn run build
@@ -27,8 +33,12 @@ RUN yarn run build
 FROM nginx
 
 COPY --from=builder /home/node/dist/client /usr/share/nginx/html
-COPY .nginx/default.conf.template /etc/nginx/templates/default.conf.template
+COPY .nginx/client.conf.template /etc/nginx/templates/default.conf.template
 
-EXPOSE 3000
+ARG CLIENT_INT_PORT
+
+ENV CLIENT_INT_PORT=${CLIENT_INT_PORT}
+
+EXPOSE ${CLIENT_INT_PORT}
 
 CMD ["nginx", "-g", "daemon off;"]

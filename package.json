@@ -8,6 +8,7 @@
 		"dev": "turbo run dev --parallel",
 		"service": "turbo run service",
 		"generate": "turbo run generate",
+		"generate:unsafe": "turbo run generate:unsafe",
 		"devtools": "turbo run devtools",
 		"postinstall": "yarn run generate",
 		"build": "turbo run build",

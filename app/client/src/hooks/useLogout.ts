@@ -1,6 +1,9 @@
+import { clientEnvironment } from 'httpEnvironment';
 import { useCallback, useState } from 'react';
 
-const server = process.env.SERVER_ORIGIN!;
+const { backendPort, backendAddress, backendEndpoint } = clientEnvironment;
+
+const server = `${backendAddress}:${backendPort}${backendEndpoint}`;
 
 export function useLogout() {
 	const [error, setError] = useState<string | null>(null);

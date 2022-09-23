@@ -1,7 +1,10 @@
+import { clientEnvironment } from 'httpEnvironment';
 import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const server = process.env.SERVER_ORIGIN!;
+const { backendPort, backendAddress, backendEndpoint } = clientEnvironment;
+
+const server = `${backendAddress}:${backendPort}${backendEndpoint}`;
 
 type LoginData = {
 	username: string;
