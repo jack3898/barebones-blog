@@ -5,6 +5,7 @@
 	"main": "src/index.ts",
 	"scripts": {
 		"dev": "nodemon src/index.ts",
+		"service": "ts-node src/index.ts",
 		"devtools": "prisma studio",
 		"generate": "prisma generate && prisma db push --accept-data-loss"
 	},

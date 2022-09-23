@@ -1,22 +1,20 @@
-FROM node:18-bullseye AS build
+FROM node:18-bullseye AS pruner
 
 WORKDIR /home/node
 
 COPY . .
 
-RUN yarn install --ignore-scripts
-
-# Prunes backend and its deps into /home/node/dist/backend
-RUN yarn run prune
+RUN yarn global add turbo
+RUN yarn run prune -- --scope @blog/backend --out-dir dist/backend
 
 FROM node:18-bullseye
 
 WORKDIR /home/node
 
-COPY --from=build --chown=node:node /home/node/dist/backend .
+COPY --from=pruner --chown=node:node /home/node/dist/backend .
 
 RUN yarn install
 
 EXPOSE 5000
 
-CMD ["yarn", "run", "dev"]
+CMD ["yarn", "run", "service"]

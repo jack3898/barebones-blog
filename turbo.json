@@ -3,6 +3,9 @@
 		"dev": {
 			"cache": false
 		},
+		"service": {
+			"cache": false
+		},
 		"build": {
 			"outputs": ["dist"]
 		},

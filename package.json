@@ -6,11 +6,12 @@
 	"main": "index.js",
 	"scripts": {
 		"dev": "turbo run dev --parallel",
+		"service": "turbo run service",
 		"generate": "turbo run generate",
 		"devtools": "turbo run devtools",
 		"postinstall": "yarn run generate",
 		"build": "turbo run build",
-		"prune": "turbo prune --scope @blog/backend --out-dir dist/backend "
+		"prune": "turbo prune"
 	},
 	"keywords": [],
 	"author": "Jack Wright",

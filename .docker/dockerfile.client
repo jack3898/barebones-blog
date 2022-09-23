@@ -1,8 +1,17 @@
-FROM node:18-bullseye AS build
+FROM node:18-bullseye AS pruner
 
 WORKDIR /home/node
 
 COPY . .
+
+RUN yarn global add turbo
+RUN yarn run prune -- --scope @blog/client --out-dir dist/client-pruned
+
+FROM node:18-bullseye AS builder
+
+WORKDIR /home/node
+
+COPY --from=pruner /home/node/dist/client-pruned .
 
 ARG NODE_ENV
 ARG CLIENT_ORIGIN
@@ -17,7 +26,7 @@ RUN yarn run build
 
 FROM nginx
 
-COPY --from=build /home/node/dist/client /usr/share/nginx/html
+COPY --from=builder /home/node/dist/client /usr/share/nginx/html
 COPY .nginx/default.conf.template /etc/nginx/templates/default.conf.template
 
 EXPOSE 3000
