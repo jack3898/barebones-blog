@@ -1,20 +1,16 @@
-import { trpc } from 'src/trpc';
-
 type DeletePostBtnProps = {
-	id: string;
 	show: boolean;
-	posts: ReturnType<typeof trpc.useInfiniteQuery<'posts'>>;
-};
+	onClick: () => void;
+} & Omit<React.HTMLAttributes<HTMLButtonElement>, 'className'>;
 
-export function DeletePostBtn({ id, show, posts }: DeletePostBtnProps) {
-	const deletePostMutation = trpc.useMutation(['delete-post']);
-
+export function DeletePostBtn({ show, onClick, ...btnProps }: DeletePostBtnProps) {
 	if (!show) return null;
 
 	return (
 		<button
 			className="danger"
-			onClick={async () => {
+			{...btnProps}
+			onClick={() => {
 				// TODO: Replace with modal
 				const shouldDelete = confirm(
 					'Are you sure you want to delete this post? You cannot undo this!'
@@ -22,10 +18,7 @@ export function DeletePostBtn({ id, show, posts }: DeletePostBtnProps) {
 
 				if (!shouldDelete) return;
 
-				deletePostMutation
-					.mutateAsync({ id })
-					.then(() => posts.refetch())
-					.catch(console.error);
+				onClick();
 			}}
 		>
 			Delete

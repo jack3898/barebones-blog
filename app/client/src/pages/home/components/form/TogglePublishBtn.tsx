@@ -1,27 +1,11 @@
-import { trpc } from 'src/trpc';
-
 type TogglePublishBtnProps = {
-	id: string;
+	onClick: () => void;
 	published: boolean;
-	posts: ReturnType<typeof trpc.useInfiniteQuery<'posts'>>;
-};
+} & Omit<React.HTMLAttributes<HTMLButtonElement>, 'className'>;
 
-export function TogglePublishBtn({ id, published, posts }: TogglePublishBtnProps) {
-	const publishPostMutation = trpc.useMutation(['publish-post']);
-
+export function TogglePublishBtn({ id, published, onClick, ...props }: TogglePublishBtnProps) {
 	return (
-		<button
-			className={published ? 'danger' : 'success'}
-			onClick={() => {
-				publishPostMutation
-					.mutateAsync({
-						id,
-						published: !published
-					})
-					.then(() => posts.refetch())
-					.catch(console.error);
-			}}
-		>
+		<button {...props} className={published ? 'danger' : 'success'} onClick={() => onClick()}>
 			{published ? 'Un-publish' : 'Publish'}
 		</button>
 	);

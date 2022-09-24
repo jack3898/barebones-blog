@@ -5,17 +5,16 @@ import { useNavigate } from 'react-router-dom';
 import { RequireAuth } from 'src/components';
 import { useSearchParamsContext } from 'src/context/searchParams';
 import { trpc } from 'src/trpc';
+import { useCreatePostMutation, useInitialInfinitePostsQueryParams } from 'src/trpc-hooks';
+import { usePostMutation } from 'src/trpc-hooks/usePostMutation';
 import { CancelEditBtn } from './form/CancelEditBtn';
 import { SubmitBtn } from './form/SubmitBtn';
 
-type PostComposerProps = {
-	posts: ReturnType<typeof trpc.useInfiniteQuery<'posts'>>;
-};
-
-export function PostComposer({ posts }: PostComposerProps) {
+export function PostComposer() {
+	const trpcUtils = trpc.useContext();
 	const [searchParams, updateSearchParams] = useSearchParamsContext();
-	const createPostMutation = trpc.useMutation(['create-post']);
-	const post = trpc.useMutation(['post']);
+	const createPostMutation = useCreatePostMutation();
+	const post = usePostMutation();
 	const navigate = useNavigate();
 
 	const { handleSubmit, getFieldProps, values, resetForm, setValues } = useFormik({
@@ -26,7 +25,6 @@ export function PostComposer({ posts }: PostComposerProps) {
 		onSubmit(values) {
 			createPostMutation
 				.mutateAsync(values)
-				.then(() => posts.refetch())
 				.then(() => {
 					resetForm();
 					navigate('/');
@@ -36,12 +34,27 @@ export function PostComposer({ posts }: PostComposerProps) {
 	});
 
 	useEffect(() => {
-		if (searchParams.edit) {
-			post.mutateAsync({ id: searchParams.edit }).then((res) => {
-				setValues({ id: res?.id || '', content: res?.content! });
-				window.scrollTo({ top: 0 });
+		if (!searchParams.edit) return;
+
+		trpcUtils.fetchInfiniteQuery(['posts', useInitialInfinitePostsQueryParams]).then((res) => {
+			// Search for the post locally first
+			const cachePost = res.pages
+				.flatMap(({ items }) => items)
+				.find(({ id }) => id === searchParams.edit);
+
+			if (cachePost) {
+				setValues({ id: cachePost?.id || '', content: cachePost?.content || '' });
+				return;
+			}
+
+			post.mutateAsync({ id: searchParams.edit || '' }).then((apiPost) => {
+				if (!apiPost) return;
+
+				setValues({ id: apiPost.id, content: apiPost.content });
 			});
-		}
+		});
+
+		window.scrollTo({ top: 0 });
 	}, [searchParams.edit]);
 
 	return (

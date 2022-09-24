@@ -1,25 +1,25 @@
 import { Container } from '@blog/components/core';
+import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { trpc } from 'src/trpc';
+import { useInitialInfinitePostsQuery } from 'src/trpc-hooks';
 import { PostComposer } from './components/PostComposer';
 import { PostList } from './components/PostList';
 
 export default function Home() {
-	const posts = trpc.useInfiniteQuery(['posts', { limit: 10 }], {
-		getNextPageParam: ({ cursor }) => cursor
-	});
-	const hasNextPage = !!posts.data?.pages[posts.data.pages.length - 1].cursor;
+	const posts = useInitialInfinitePostsQuery();
 	const { ref, inView } = useInView();
 
-	if (inView && hasNextPage) {
-		posts.fetchNextPage();
-	}
+	useEffect(() => {
+		if (inView && posts.hasNextPage) {
+			posts.fetchNextPage();
+		}
+	}, [inView]);
 
 	return (
 		<Container className="grid gap-4 px-4">
 			<h1>Posts</h1>
-			<PostComposer posts={posts} />
-			<PostList posts={posts} />
+			<PostComposer />
+			<PostList />
 			{/* Infinite scroll trigger */}
 			<i ref={ref} />
 		</Container>

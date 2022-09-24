@@ -9,7 +9,8 @@ export const postRouter = createRouter()
 			cursor: z.string().nullish()
 		}),
 		async resolve({ ctx, input }) {
-			const limit = input.limit || 10;
+			const limit = Math.min(25, input.limit || 10);
+
 			let cursor: string | null = null;
 
 			const items = await ctx.db.post.findMany({
@@ -97,7 +98,8 @@ export const postRouter = createRouter()
 			return ctx.db.post.deleteMany({
 				where: {
 					id: input.id,
-					published: false
+					published: false,
+					userId: ctx.loggedInUser.id
 				}
 			});
 		}
@@ -115,9 +117,10 @@ export const postRouter = createRouter()
 				});
 			}
 
-			return ctx.db.post.update({
+			return ctx.db.post.updateMany({
 				where: {
-					id: input.id
+					id: input.id,
+					userId: ctx.loggedInUser.id
 				},
 				data: {
 					published: input.published
