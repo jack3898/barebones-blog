@@ -3,7 +3,7 @@ import z from 'zod';
 import { createRouter } from '../trpcRouter';
 
 export const postRouter = createRouter()
-	.query('posts', {
+	.query('post.many', {
 		input: z.object({
 			limit: z.number().nullish(),
 			cursor: z.string().nullish()
@@ -42,7 +42,7 @@ export const postRouter = createRouter()
 			};
 		}
 	})
-	.mutation('post', {
+	.mutation('post.single', {
 		input: z.object({
 			id: z.string()
 		}),
@@ -54,7 +54,7 @@ export const postRouter = createRouter()
 			});
 		}
 	})
-	.mutation('upsert-post', {
+	.mutation('post.upsert', {
 		input: z.object({
 			id: z.string().nullish(),
 			content: z.string()
@@ -89,7 +89,7 @@ export const postRouter = createRouter()
 			});
 		}
 	})
-	.mutation('delete-post', {
+	.mutation('post.delete', {
 		input: z.object({
 			id: z.string()
 		}),
@@ -110,7 +110,7 @@ export const postRouter = createRouter()
 			});
 		}
 	})
-	.mutation('publish-post', {
+	.mutation('post.setpublish', {
 		input: z.object({
 			id: z.string(),
 			published: z.boolean()

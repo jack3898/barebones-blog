@@ -17,7 +17,7 @@ export function PostList() {
 	const deletePostMutation = useDeletePostMutation();
 	const publishPostMutation = usePublishPostMutation();
 	const postsResponse = trpcUtils.getInfiniteQueryData([
-		'posts',
+		'post.many',
 		useInitialInfinitePostsQueryParams
 	]);
 

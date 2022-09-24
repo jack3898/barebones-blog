@@ -36,23 +36,25 @@ export function PostComposer() {
 	useEffect(() => {
 		if (!searchParams.edit) return;
 
-		trpcUtils.fetchInfiniteQuery(['posts', useInitialInfinitePostsQueryParams]).then((res) => {
-			// Search for the post locally first
-			const cachePost = res.pages
-				.flatMap(({ items }) => items)
-				.find(({ id }) => id === searchParams.edit);
+		trpcUtils
+			.fetchInfiniteQuery(['post.many', useInitialInfinitePostsQueryParams])
+			.then((res) => {
+				// Search for the post locally first
+				const cachePost = res.pages
+					.flatMap(({ items }) => items)
+					.find(({ id }) => id === searchParams.edit);
 
-			if (cachePost) {
-				setValues({ id: cachePost?.id || '', content: cachePost?.content || '' });
-				return;
-			}
+				if (cachePost) {
+					setValues({ id: cachePost?.id || '', content: cachePost?.content || '' });
+					return;
+				}
 
-			post.mutateAsync({ id: searchParams.edit || '' }).then((apiPost) => {
-				if (!apiPost) return;
+				post.mutateAsync({ id: searchParams.edit || '' }).then((apiPost) => {
+					if (!apiPost) return;
 
-				setValues({ id: apiPost.id, content: apiPost.content });
+					setValues({ id: apiPost.id, content: apiPost.content });
+				});
 			});
-		});
 
 		window.scrollTo({ top: 0 });
 	}, [searchParams.edit]);

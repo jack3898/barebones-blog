@@ -4,12 +4,12 @@ import { useInitialInfinitePostsQueryParams } from './useInitialInfinitePostsQue
 export function useDeletePostMutation() {
 	const trpcUtils = trpc.useContext();
 
-	return trpc.useMutation(['delete-post'], {
+	return trpc.useMutation(['post.delete'], {
 		onSuccess(_, { id }) {
-			trpcUtils.cancelQuery(['posts']);
+			trpcUtils.cancelQuery(['post.many']);
 
 			trpcUtils.setInfiniteQueryData(
-				['posts', useInitialInfinitePostsQueryParams],
+				['post.many', useInitialInfinitePostsQueryParams],
 				(data) => {
 					if (!data) {
 						return {

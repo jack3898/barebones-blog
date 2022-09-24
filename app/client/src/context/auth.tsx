@@ -15,7 +15,7 @@ const AuthContext = createContext({
 } as AuthContextValue);
 
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
-	const loggedInUser = trpc.useQuery(['loggedinuser']);
+	const loggedInUser = trpc.useQuery(['user.loggedin']);
 
 	const getLoggedInUser = () => {
 		return loggedInUser.data || null;

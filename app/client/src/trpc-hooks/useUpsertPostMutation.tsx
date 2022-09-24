@@ -6,12 +6,12 @@ export function useUpsertPostMutation() {
 	const trpcUtils = trpc.useContext();
 	const { loggedInUser } = useAuthContext();
 
-	return trpc.useMutation(['upsert-post'], {
+	return trpc.useMutation(['post.upsert'], {
 		onSuccess({ id, content, created, updated }) {
-			trpcUtils.cancelQuery(['posts']);
+			trpcUtils.cancelQuery(['post.many']);
 
 			trpcUtils.setInfiniteQueryData(
-				['posts', useInitialInfinitePostsQueryParams],
+				['post.many', useInitialInfinitePostsQueryParams],
 				(data) => {
 					if (!data) {
 						return {

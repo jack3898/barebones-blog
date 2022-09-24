@@ -4,12 +4,12 @@ import { useInitialInfinitePostsQueryParams } from './useInitialInfinitePostsQue
 export function usePublishPostMutation() {
 	const trpcUtils = trpc.useContext();
 
-	return trpc.useMutation(['publish-post'], {
+	return trpc.useMutation(['post.setpublish'], {
 		onSuccess(_, { id, published }) {
-			trpcUtils.cancelQuery(['posts']);
+			trpcUtils.cancelQuery(['post.many']);
 
 			trpcUtils.setInfiniteQueryData(
-				['posts', useInitialInfinitePostsQueryParams],
+				['post.many', useInitialInfinitePostsQueryParams],
 				(data) => {
 					if (!data) {
 						return {
