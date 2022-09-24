@@ -54,7 +54,7 @@ export const postRouter = createRouter()
 			});
 		}
 	})
-	.mutation('create-post', {
+	.mutation('upsert-post', {
 		input: z.object({
 			id: z.string().nullish(),
 			content: z.string()
@@ -79,6 +79,12 @@ export const postRouter = createRouter()
 					content: input.content,
 					published: false,
 					userId: ctx.loggedInUser.id
+				},
+				select: {
+					id: true,
+					content: true,
+					created: true,
+					updated: true
 				}
 			});
 		}

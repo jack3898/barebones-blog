@@ -2,12 +2,12 @@ import { useAuthContext } from 'src/context';
 import { trpc } from 'src/trpc';
 import { useInitialInfinitePostsQueryParams } from './useInitialInfinitePostsQuery';
 
-export function useCreatePostMutation() {
+export function useUpsertPostMutation() {
 	const trpcUtils = trpc.useContext();
 	const { loggedInUser } = useAuthContext();
 
-	return trpc.useMutation(['create-post'], {
-		onSuccess(_, { id, content }) {
+	return trpc.useMutation(['upsert-post'], {
+		onSuccess({ id, content, created, updated }) {
 			trpcUtils.cancelQuery(['posts']);
 
 			trpcUtils.setInfiniteQueryData(
@@ -20,9 +20,19 @@ export function useCreatePostMutation() {
 						};
 					}
 
-					return {
+					// Step 1, remove the existing record that is potentially updated
+					const removed = {
 						...data,
 						pages: data?.pages.map((page) => ({
+							...page,
+							items: page.items.filter((item) => item.id !== id)
+						}))
+					};
+
+					// Then insert the new version and return it
+					return {
+						...removed,
+						pages: removed?.pages.map((page) => ({
 							...page,
 							items: [
 								{
@@ -32,9 +42,9 @@ export function useCreatePostMutation() {
 										firstname: loggedInUser?.firstname!,
 										lastname: loggedInUser?.lastname!
 									},
-									created: new Date(),
+									created: created,
 									published: false,
-									updated: new Date(),
+									updated: updated,
 									userId: loggedInUser?.id!
 								},
 								...page.items
