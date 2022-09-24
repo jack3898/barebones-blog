@@ -9,7 +9,7 @@ type AuthenticatedProps = {
 export function RequireAuth({ children, fallback = null, mode = true }: AuthenticatedProps) {
 	const { loggedInUser } = useAuthContext();
 
-	if (!!loggedInUser === mode) return <>{children}</>;
+	if (!!loggedInUser === !!mode) return <>{children}</>;
 
 	return <>{fallback}</>;
 }

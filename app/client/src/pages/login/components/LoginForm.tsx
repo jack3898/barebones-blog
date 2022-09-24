@@ -1,3 +1,4 @@
+import { Card } from '@blog/components/core';
 import { useFormik } from 'formik';
 import { Link } from 'react-router-dom';
 import { RequireAuth } from 'src/components';
@@ -31,22 +32,24 @@ export function LoginForm() {
 					</p>
 				}
 			>
-				<form onSubmit={handleSubmit} className="bg-white p-4 rounded shadow grid gap-4">
-					<label>
-						<div>Username:</div>
-						<input type="text" {...getFieldProps('username')} />
-					</label>
-					<label>
-						<div>Password:</div>
-						<input type="password" {...getFieldProps('password')} />
-					</label>
-					<div>
-						<button type="submit" className="primary">
-							Login
-						</button>
-					</div>
-				</form>
-				{error && <p>{error}</p>}
+				<Card className="p-4">
+					<form onSubmit={handleSubmit} className="grid gap-4">
+						<label>
+							<div>Username:</div>
+							<input type="text" {...getFieldProps('username')} />
+						</label>
+						<label>
+							<div>Password:</div>
+							<input type="password" {...getFieldProps('password')} />
+						</label>
+						<div>
+							<button type="submit" className="primary">
+								Login
+							</button>
+						</div>
+					</form>
+					{error && <p>{error}</p>}
+				</Card>
 			</RequireAuth>
 			<Link to="/">Home</Link>
 		</>

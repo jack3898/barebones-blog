@@ -1,3 +1,4 @@
+export { useCreateFirstUserMutation } from './useCreateFirstUserMutation';
 export { useDeletePostMutation } from './useDeletePostMutation';
 export {
 	useInitialInfinitePostsQuery,

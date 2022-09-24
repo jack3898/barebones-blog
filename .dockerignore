@@ -5,4 +5,4 @@ yarn-error.lock
 .docker
 dist
 .env
-*.db
+**/*.db
