@@ -1,4 +1,5 @@
-import { decodeJwt, parseCookie, verifyJwt } from '@blog/utils';
+import { parseCookie } from '@blog/utils/both/parseCookie';
+import { decodeJwt, verifyJwt } from '@blog/utils/node/jwt';
 import { inferAsyncReturnType } from '@trpc/server';
 import { CreateNextContextOptions } from '@trpc/server/adapters/next';
 import client from './prisma';

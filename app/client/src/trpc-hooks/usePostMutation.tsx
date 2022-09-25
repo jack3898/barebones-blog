@@ -1,4 +1,4 @@
-import { trpc } from 'src/trpc';
+import { trpc } from '@blog/components/trpc';
 
 export function usePostMutation() {
 	return trpc.useMutation(['post.single']);

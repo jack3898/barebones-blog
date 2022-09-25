@@ -1,5 +1,5 @@
 import { server } from '@blog/config-webpack';
-import { rootenv } from '@blog/utils';
+import { rootenv } from '@blog/utils/node/rootenv';
 import { webpackClientConfig } from './app.build';
 
 rootenv();

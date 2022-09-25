@@ -21,7 +21,7 @@ export function DeletePostBtn({ show, onConfirm, ...btnProps }: DeletePostBtnPro
 						<p>Are you sure you want to delete this post? You cannot undo this!</p>
 					),
 					footer: (
-						<div className="flex gap-4 justify-end">
+						<div className="flex gap-4">
 							<button className="primary" onClick={() => modalToggle(false)}>
 								No
 							</button>

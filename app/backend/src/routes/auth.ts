@@ -1,4 +1,5 @@
-import { signJwt, verifyHash } from '@blog/utils';
+import { verifyHash } from '@blog/utils/node/hash';
+import { signJwt } from '@blog/utils/node/jwt';
 import { User } from '@prisma/client';
 import bodyParser from 'body-parser';
 import express from 'express';

@@ -1,4 +1,4 @@
-import { createHash } from '@blog/utils';
+import { createHash } from '@blog/utils/node/hash';
 import { TRPCError } from '@trpc/server';
 import z from 'zod';
 import { createRouter } from '../trpcRouter';

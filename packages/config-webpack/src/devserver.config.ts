@@ -1,4 +1,4 @@
-import { rootenv } from '@blog/utils';
+import { rootenv } from '@blog/utils/node/rootenv';
 import { Configuration as DevServerConfig } from 'webpack-dev-server';
 
 rootenv();

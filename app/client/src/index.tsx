@@ -1,13 +1,13 @@
 import { Modal, ModalContextProvider } from '@blog/components/modal';
+import { queryClient, trpc, useTrpcClient } from '@blog/components/trpc';
 import { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import { QueryClientProvider } from 'react-query';
 import { BrowserRouter } from 'react-router-dom';
 import { App } from './App';
 import { AuthContextProvider } from './context';
-import { queryClient, trpc, useTrpcClient } from './trpc';
 
-import { SearchParamsProvider } from './context/searchParams';
+import { SearchParamsProvider } from '@blog/components/context/searchParams';
 import './index.css';
 
 function Main() {

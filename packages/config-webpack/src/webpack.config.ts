@@ -1,5 +1,5 @@
 import { ROOT } from '@blog/constants/node';
-import { rootenv } from '@blog/utils';
+import { rootenv } from '@blog/utils/node/rootenv';
 import path from 'path';
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 import { Configuration as WebpackConfig } from 'webpack';

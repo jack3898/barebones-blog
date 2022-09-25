@@ -1,4 +1,4 @@
-import { clientEnvironment } from 'httpEnvironment';
+import { clientEnvironment } from '@blog/utils/both/httpenv/client';
 import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 

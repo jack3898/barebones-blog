@@ -1,11 +1,10 @@
+import { useSearchParamsContext } from '@blog/components/context';
 import { Card, Markdown } from '@blog/components/core';
-import { useModal } from '@blog/components/modal';
+import { trpc } from '@blog/components/trpc';
 import { useFormik } from 'formik';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RequireAuth } from 'src/components';
-import { useSearchParamsContext } from 'src/context/searchParams';
-import { trpc } from 'src/trpc';
 import { useCreatePostMutation, useInitialInfinitePostsQueryParams } from 'src/trpc-hooks';
 import { usePostMutation } from 'src/trpc-hooks/usePostMutation';
 import { CancelEditBtn } from './form/CancelEditBtn';
@@ -13,11 +12,10 @@ import { SubmitBtn } from './form/SubmitBtn';
 
 export function PostComposer() {
 	const trpcUtils = trpc.useContext();
-	const [searchParams, updateSearchParams] = useSearchParamsContext();
+	const [searchParams] = useSearchParamsContext();
 	const createPostMutation = useCreatePostMutation();
 	const post = usePostMutation();
 	const navigate = useNavigate();
-	const { modalUpdate, modalToggle } = useModal();
 
 	const { handleSubmit, getFieldProps, values, resetForm, setValues } = useFormik({
 		initialValues: {

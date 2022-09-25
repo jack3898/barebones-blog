@@ -1,5 +1,5 @@
+import { useSearchParamsContext } from '@blog/components/context';
 import { useModal } from '@blog/components/modal';
-import { useSearchParamsContext } from 'src/context/searchParams';
 
 type EditPostBtnProps = {
 	id: string;
@@ -20,7 +20,7 @@ export function EditPostBtn({ id }: EditPostBtnProps) {
 						title: 'Confirmation',
 						content: <p>You are already editing something else. Discard changes?</p>,
 						footer: (
-							<div className="flex gap-4 justify-end">
+							<div className="flex gap-4">
 								<button className="primary" onClick={() => modalToggle(false)}>
 									No
 								</button>

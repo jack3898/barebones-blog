@@ -1,5 +1,5 @@
+import { trpc } from '@blog/components/trpc';
 import { useAuthContext } from 'src/context';
-import { trpc } from 'src/trpc';
 import { useInitialInfinitePostsQueryParams } from './useInitialInfinitePostsQuery';
 
 export function useUpsertPostMutation() {

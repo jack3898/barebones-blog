@@ -1,6 +1,5 @@
 import { Card } from '@blog/components/core';
 import { useFormik } from 'formik';
-import { Link } from 'react-router-dom';
 import { RequireAuth } from 'src/components';
 import { useLogin, useLogout } from 'src/hooks';
 
@@ -21,17 +20,7 @@ export function LoginForm() {
 	return (
 		<>
 			<h1>Login</h1>
-			<RequireAuth
-				mode={false}
-				fallback={
-					<p>
-						You are already logged in!{' '}
-						<a href="#" onClick={() => logout(() => window.location.reload())}>
-							Logout?
-						</a>
-					</p>
-				}
-			>
+			<RequireAuth mode={false} fallback={<p>You are already logged in!</p>}>
 				<Card className="p-4">
 					<form onSubmit={handleSubmit} className="grid gap-4">
 						<label>
@@ -51,7 +40,6 @@ export function LoginForm() {
 					{error && <p>{error}</p>}
 				</Card>
 			</RequireAuth>
-			<Link to="/">Home</Link>
 		</>
 	);
 }

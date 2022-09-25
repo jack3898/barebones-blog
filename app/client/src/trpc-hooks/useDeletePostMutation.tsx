@@ -1,4 +1,4 @@
-import { trpc } from 'src/trpc';
+import { trpc } from '@blog/components/trpc';
 import { useInitialInfinitePostsQueryParams } from './useInitialInfinitePostsQuery';
 
 export function useDeletePostMutation() {

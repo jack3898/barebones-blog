@@ -13,11 +13,11 @@ export function Modal() {
 			/>
 			<div className="grid place-items-center col-start-1 col-end-[-1] row-start-1 row-end-[-1] z-[51] p-4">
 				<article className="bg-white rounded w-screen max-w-2xl grid gap-4">
-					<header className="p-4">
+					<header className="p-4 border-b">
 						<h2>{modalContent.title}</h2>
 					</header>
-					<div className="p-4">{modalContent.content}</div>
-					<footer className="p-4">{modalContent.footer}</footer>
+					<div className="px-4">{modalContent.content}</div>
+					<footer className="flex justify-end p-4 border-t">{modalContent.footer}</footer>
 				</article>
 			</div>
 		</div>

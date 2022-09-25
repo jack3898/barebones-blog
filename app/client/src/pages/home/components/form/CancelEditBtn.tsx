@@ -1,5 +1,5 @@
+import { useSearchParamsContext } from '@blog/components/context';
 import { useModal } from '@blog/components/modal';
-import { useSearchParamsContext } from 'src/context/searchParams';
 
 type CancelEditBtnProps = {
 	onConfirm: () => void;
@@ -7,7 +7,7 @@ type CancelEditBtnProps = {
 
 export function CancelEditBtn({ onConfirm }: CancelEditBtnProps) {
 	const { modalToggle, modalUpdate } = useModal();
-	const [searchParams, updateSearchParams] = useSearchParamsContext();
+	const [, updateSearchParams] = useSearchParamsContext();
 
 	return (
 		<button
@@ -18,7 +18,7 @@ export function CancelEditBtn({ onConfirm }: CancelEditBtnProps) {
 					title: 'Confirmation',
 					content: <p>Are you sure you want to discard your changes?</p>,
 					footer: (
-						<div className="flex gap-4 justify-end">
+						<div className="flex gap-4">
 							<button className="primary" onClick={() => modalToggle(false)}>
 								No
 							</button>

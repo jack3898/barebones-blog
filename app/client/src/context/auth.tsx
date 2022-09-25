@@ -1,6 +1,6 @@
 import { ctxUser } from '@blog/backend';
+import { trpc } from '@blog/components/trpc';
 import React, { createContext, useContext } from 'react';
-import { trpc } from 'src/trpc';
 
 type AuthContextProviderProps = {
 	children: React.ReactNode;
