@@ -1,3 +1,4 @@
+import { Modal, ModalContextProvider } from '@blog/components/modal';
 import { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import { QueryClientProvider } from 'react-query';
@@ -20,7 +21,10 @@ function Main() {
 					<Suspense>
 						<BrowserRouter>
 							<SearchParamsProvider>
-								<App />
+								<ModalContextProvider>
+									<App />
+									<Modal />
+								</ModalContextProvider>
 							</SearchParamsProvider>
 						</BrowserRouter>
 					</Suspense>

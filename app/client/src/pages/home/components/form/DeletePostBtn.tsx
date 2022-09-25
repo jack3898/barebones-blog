@@ -1,9 +1,13 @@
+import { useModal } from '@blog/components/modal';
+
 type DeletePostBtnProps = {
 	show: boolean;
-	onClick: () => void;
+	onConfirm: () => void;
 } & Omit<React.HTMLAttributes<HTMLButtonElement>, 'className'>;
 
-export function DeletePostBtn({ show, onClick, ...btnProps }: DeletePostBtnProps) {
+export function DeletePostBtn({ show, onConfirm, ...btnProps }: DeletePostBtnProps) {
+	const { modalToggle, modalUpdate } = useModal();
+
 	if (!show) return null;
 
 	return (
@@ -11,14 +15,30 @@ export function DeletePostBtn({ show, onClick, ...btnProps }: DeletePostBtnProps
 			className="danger"
 			{...btnProps}
 			onClick={() => {
-				// TODO: Replace with modal
-				const shouldDelete = confirm(
-					'Are you sure you want to delete this post? You cannot undo this!'
-				);
+				modalUpdate({
+					title: 'Confirmation',
+					content: (
+						<p>Are you sure you want to delete this post? You cannot undo this!</p>
+					),
+					footer: (
+						<div className="flex gap-4 justify-end">
+							<button className="primary" onClick={() => modalToggle(false)}>
+								No
+							</button>
+							<button
+								className="danger"
+								onClick={() => {
+									onConfirm();
+									modalToggle(false);
+								}}
+							>
+								Yes
+							</button>
+						</div>
+					)
+				});
 
-				if (!shouldDelete) return;
-
-				onClick();
+				modalToggle(true);
 			}}
 		>
 			Delete

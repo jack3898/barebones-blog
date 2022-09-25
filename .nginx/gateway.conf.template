@@ -42,9 +42,6 @@ server {
         proxy_set_header    X-Real-IP $remote_addr;
         proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header    X-Forwarded-Host $server_name;
-
-        # Set cache policy
-        add_header          Cache-Control max-age=31536000;
     }
 
     location ${BACKEND_PUB_ENDPOINT} {
@@ -55,8 +52,5 @@ server {
         proxy_set_header    X-Real-IP $remote_addr;
         proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header    X-Forwarded-Host $server_name;
-
-        # Set cache policy
-        add_header          Cache-Control max-age=31536000;
     }
 }

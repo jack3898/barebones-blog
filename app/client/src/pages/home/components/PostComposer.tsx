@@ -1,4 +1,5 @@
 import { Card, Markdown } from '@blog/components/core';
+import { useModal } from '@blog/components/modal';
 import { useFormik } from 'formik';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -16,6 +17,7 @@ export function PostComposer() {
 	const createPostMutation = useCreatePostMutation();
 	const post = usePostMutation();
 	const navigate = useNavigate();
+	const { modalUpdate, modalToggle } = useModal();
 
 	const { handleSubmit, getFieldProps, values, resetForm, setValues } = useFormik({
 		initialValues: {
@@ -79,18 +81,7 @@ export function PostComposer() {
 					{values.content && (
 						<div className="flex gap-2">
 							<SubmitBtn />
-							<CancelEditBtn
-								callback={() => {
-									const response = confirm(
-										'Are you sure you want to discard your changes?'
-									);
-
-									if (!response) return;
-
-									updateSearchParams('delete', 'edit');
-									resetForm();
-								}}
-							/>
+							<CancelEditBtn onConfirm={() => resetForm()} />
 						</div>
 					)}
 				</form>

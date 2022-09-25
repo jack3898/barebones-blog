@@ -1,3 +1,4 @@
+import { useModal } from '@blog/components/modal';
 import { useSearchParamsContext } from 'src/context/searchParams';
 
 type EditPostBtnProps = {
@@ -6,6 +7,7 @@ type EditPostBtnProps = {
 
 export function EditPostBtn({ id }: EditPostBtnProps) {
 	const [searchParams, updateSearchParams] = useSearchParamsContext();
+	const { modalToggle, modalUpdate } = useModal();
 
 	if (searchParams.edit === id) return null;
 
@@ -14,11 +16,30 @@ export function EditPostBtn({ id }: EditPostBtnProps) {
 			className="primary"
 			onClick={() => {
 				if (searchParams.edit) {
-					const result = confirm(
-						'You are already editing something else. Discard changes?'
-					);
+					modalUpdate({
+						title: 'Confirmation',
+						content: <p>You are already editing something else. Discard changes?</p>,
+						footer: (
+							<div className="flex gap-4 justify-end">
+								<button className="primary" onClick={() => modalToggle(false)}>
+									No
+								</button>
+								<button
+									className="danger"
+									onClick={() => {
+										updateSearchParams('set', 'edit', id);
+										modalToggle(false);
+									}}
+								>
+									Yes
+								</button>
+							</div>
+						)
+					});
 
-					if (!result) return;
+					modalToggle(true);
+
+					return;
 				}
 
 				updateSearchParams('set', 'edit', id);

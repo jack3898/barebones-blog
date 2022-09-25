@@ -52,7 +52,7 @@ export function PostList() {
 								<div className="text-right">
 									<DeletePostBtn
 										show={!published}
-										onClick={() =>
+										onConfirm={() =>
 											deletePostMutation.mutate({
 												id
 											})
