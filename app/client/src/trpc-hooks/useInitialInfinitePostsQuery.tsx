@@ -1,4 +1,4 @@
-import { trpc } from '@blog/components/trpc';
+import { trpc } from '@blog/components/context';
 import { useState } from 'react';
 
 export const useInitialInfinitePostsQueryParams = { limit: 10 };

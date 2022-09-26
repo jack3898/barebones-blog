@@ -1,6 +1,6 @@
-import { trpc } from '@blog/components/trpc';
 import { clientEnvironment } from '@blog/utils/both/httpenv/client';
 import { useCallback, useState } from 'react';
+import { trpc } from '../context';
 
 const { backendPort, backendAddress, backendEndpoint } = clientEnvironment;
 

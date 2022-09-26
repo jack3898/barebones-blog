@@ -1,11 +1,10 @@
 import { Card } from '@blog/components/core';
+import { useLogin } from '@blog/components/hooks';
 import { useFormik } from 'formik';
 import { RequireAuth } from 'src/components';
-import { useLogin, useLogout } from 'src/hooks';
 
 export function LoginForm() {
 	const [login, error] = useLogin();
-	const [logout] = useLogout();
 
 	const { handleSubmit, getFieldProps } = useFormik({
 		initialValues: {

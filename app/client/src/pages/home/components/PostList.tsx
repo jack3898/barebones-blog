@@ -1,8 +1,7 @@
-import { Markdown, Post } from '@blog/components/core';
-import { trpc } from '@blog/components/trpc';
+import { trpc } from '@blog/components/context';
+import { Markdown, Post, RequireAuth } from '@blog/components/core';
 import { DATE_TIME } from '@blog/constants/browser';
 import { format } from 'date-fns';
-import { RequireAuth } from 'src/components';
 import {
 	useDeletePostMutation,
 	useInitialInfinitePostsQueryParams,

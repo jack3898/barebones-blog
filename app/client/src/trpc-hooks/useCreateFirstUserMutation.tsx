@@ -1,4 +1,4 @@
-import { trpc } from '@blog/components/trpc';
+import { trpc } from '@blog/components/context';
 import { useNavigate } from 'react-router-dom';
 
 export function useCreateFirstUserMutation() {

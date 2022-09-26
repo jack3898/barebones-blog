@@ -1,10 +1,8 @@
-import { useSearchParamsContext } from '@blog/components/context';
-import { Card, Markdown } from '@blog/components/core';
-import { trpc } from '@blog/components/trpc';
+import { trpc, useSearchParamsContext } from '@blog/components/context';
+import { Card, Markdown, RequireAuth } from '@blog/components/core';
 import { useFormik } from 'formik';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { RequireAuth } from 'src/components';
 import { useCreatePostMutation, useInitialInfinitePostsQueryParams } from 'src/trpc-hooks';
 import { usePostMutation } from 'src/trpc-hooks/usePostMutation';
 import { CancelEditBtn } from './form/CancelEditBtn';

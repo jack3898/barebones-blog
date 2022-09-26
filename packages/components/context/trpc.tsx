@@ -1,16 +1,26 @@
 import { TrpcRouter } from '@blog/backend';
 import { clientEnvironment } from '@blog/utils/both/httpenv/client';
 import { createReactQueryHooks } from '@trpc/react';
-import { useState } from 'react';
-import { QueryClient } from 'react-query';
+import React, { useState } from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 export const trpc = createReactQueryHooks<TrpcRouter>();
 
-export const queryClient = new QueryClient();
+const queryClient = new QueryClient();
+
+export const TRPCProvider = ({ children }: { children: React.ReactNode }) => {
+	const [trpcClient] = useTrpcClient();
+
+	return (
+		<trpc.Provider client={trpcClient} queryClient={queryClient}>
+			<QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+		</trpc.Provider>
+	);
+};
 
 const { backendAddress, backendPort, backendEndpoint } = clientEnvironment;
 
-export const useTrpcClient = () => {
+const useTrpcClient = () => {
 	return useState(() =>
 		trpc.createClient({
 			url: `${backendAddress}:${backendPort}${backendEndpoint}/trpc`,

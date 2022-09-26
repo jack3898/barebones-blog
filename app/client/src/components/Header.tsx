@@ -1,8 +1,8 @@
+import { useAuthContext } from '@blog/components/context';
 import { Card, Container } from '@blog/components/core';
+import { useLogout } from '@blog/components/hooks';
 import { useModal } from '@blog/components/modal';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuthContext } from 'src/context';
-import { useLogout } from 'src/hooks';
 
 export function Header() {
 	const { loggedInUser } = useAuthContext();

@@ -1,6 +1,6 @@
 import { ctxUser } from '@blog/backend';
-import { trpc } from '@blog/components/trpc';
 import React, { createContext, useContext } from 'react';
+import { trpc } from './trpc';
 
 type AuthContextProviderProps = {
 	children: React.ReactNode;
@@ -14,7 +14,7 @@ const AuthContext = createContext({
 	loggedInUser: {}
 } as AuthContextValue);
 
-export function AuthContextProvider({ children }: AuthContextProviderProps) {
+export function AuthProvider({ children }: AuthContextProviderProps) {
 	const loggedInUser = trpc.useQuery(['user.loggedin']);
 
 	const getLoggedInUser = () => {

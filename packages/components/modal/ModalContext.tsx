@@ -28,7 +28,7 @@ export const ModalContext = createContext<ModalContext>({
 	modalContent: defaultModalContent
 });
 
-export function ModalContextProvider({ children }: ModalContextProviderProps) {
+export function ModalProvider({ children }: ModalContextProviderProps) {
 	const [visible, setVisible] = useState(false);
 	const [content, setContent] = useState<ModalContent>(defaultModalContent);
 
