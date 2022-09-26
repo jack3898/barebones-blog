@@ -17,6 +17,9 @@
 		},
 		"devtools": {
 			"cache": false
+		},
+		"generate-ssl": {
+			"cache": false
 		}
 	}
 }

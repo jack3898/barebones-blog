@@ -12,7 +12,7 @@ services:
             - DOCKER=true
             - NODE_ENV
             - JWT_SECRET
-            - PUB_ADDR
+            - PUB_HOST
             - PUB_PORT
             - PUB_PORT_SSL
             - BACKEND_PUB_ENDPOINT
@@ -27,12 +27,17 @@ services:
                 - NODE_ENV=${NODE_ENV}
                 - PUB_PORT=${PUB_PORT}
                 - PUB_PORT_SSL=${PUB_PORT_SSL}
-                - PUB_ADDR=${PUB_ADDR}
+                - PUB_HOST=${PUB_HOST}
                 - BACKEND_PUB_ENDPOINT=${BACKEND_PUB_ENDPOINT}
                 - BACKEND_INT_PORT=${BACKEND_INT_PORT}
                 - CLIENT_INT_PORT=${CLIENT_INT_PORT}
     nginx:
         container_name: gateway
+        build:
+            context: .
+            dockerfile: .docker/dockerfile.gateway
+            args:
+                - PUB_HOST=${PUB_HOST}
         image: nginx
         restart: always
         depends_on:
@@ -44,7 +49,6 @@ services:
         volumes:
             - ./.nginx/gateway.conf.template:/etc/nginx/templates/default.conf.template
         environment:
-            - PUB_ADDR
             - PUB_PORT
             - PUB_PORT_SSL
             - BACKEND_PUB_ENDPOINT

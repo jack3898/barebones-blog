@@ -12,7 +12,8 @@
 		"devtools": "turbo run devtools",
 		"postinstall": "yarn run generate",
 		"build": "turbo run build",
-		"prune": "turbo prune"
+		"prune": "turbo prune",
+		"generate-ssl": "turbo run generate-ssl"
 	},
 	"keywords": [],
 	"author": "Jack Wright",

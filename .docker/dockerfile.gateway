@@ -1,0 +1,31 @@
+FROM node:18-bullseye as pruner
+
+WORKDIR /home/node
+
+COPY . .
+
+RUN yarn global add turbo
+RUN yarn run prune -- --scope @blog/ssl --out-dir dist/ssl-pruned
+
+FROM node:18-bullseye as sslgen
+
+WORKDIR /home/node
+
+COPY --from=pruner /home/node/dist/ssl-pruned .
+
+ARG PUB_HOST
+
+ENV PUB_HOST=${PUB_HOST}
+
+RUN yarn install
+RUN yarn run generate-ssl
+
+FROM nginx
+
+ARG PUB_HOST
+
+ENV PUB_HOST=${PUB_HOST}
+
+COPY --from=sslgen /home/node/dist/ssl /etc/letsencrypt/live/${PUB_HOST}
+
+CMD ["nginx", "-g", "daemon off;"]

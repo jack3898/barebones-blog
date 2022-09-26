@@ -1,7 +1,6 @@
-import { Card } from '@blog/components/core';
+import { Card, RequireAuth } from '@blog/components/core';
 import { useLogin } from '@blog/components/hooks';
 import { useFormik } from 'formik';
-import { RequireAuth } from 'src/components';
 
 export function LoginForm() {
 	const [login, error] = useLogin();

@@ -397,6 +397,11 @@
   resolved "https://registry.yarnpkg.com/@types/scheduler/-/scheduler-0.16.2.tgz#1a62f89525723dde24ba1b01b092bf5df8ad4d39"
   integrity sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==
 
+"@types/selfsigned@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@types/selfsigned/-/selfsigned-2.0.1.tgz#13b316af4f00c54ee46cc1b7e65fe84d697b9a17"
+  integrity sha512-I0DjYArgQ4XNCN19gDuGsxp892uZVWSlmJZOF3Zpis1YZ2qC8EQyQlipUHIOyVMtDV/IsYqzSrl3ukAoYJU67A==
+
 "@types/serve-index@^1.9.1":
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/@types/serve-index/-/serve-index-1.9.1.tgz#1b5e85370a192c01ec6cec4735cf2917337a6278"
