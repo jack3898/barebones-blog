@@ -21,6 +21,7 @@
 		"cookie-parser": "^1.4.6",
 		"cors": "^2.8.5",
 		"express": "^4.18.1",
+		"selfsigned": "^2.1.1",
 		"ts-node": "^10.9.1",
 		"zod": "^3.19.1"
 	},

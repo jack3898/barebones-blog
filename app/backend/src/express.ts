@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
 import { authRouter } from './routes';
+import { sslGen } from './sslgen';
 import { createContext, trpcRouter } from './trpc';
 
 rootenv();
@@ -12,9 +13,11 @@ rootenv();
 const isDocker = !!process.env.DOCKER!;
 
 export default function server() {
+	if (isDocker) sslGen();
+
 	const app = express();
 
-	const { publicAddr, publicPort, publicEndpoint, backendInternalPort } = backendEnvironment;
+	const { publicAddr, publicPort, backendInternalPort } = backendEnvironment;
 
 	if (isDocker) {
 		app.use(

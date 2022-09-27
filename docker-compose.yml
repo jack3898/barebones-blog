@@ -17,6 +17,8 @@ services:
             - PUB_PORT_SSL
             - BACKEND_PUB_ENDPOINT
             - BACKEND_INT_PORT
+        volumes:
+            - ./dist/ssl:/home/node/dist/ssl:rw
     client:
         container_name: client
         build:
@@ -48,6 +50,7 @@ services:
             - 80:80
         volumes:
             - ./.nginx/gateway.conf.template:/etc/nginx/templates/default.conf.template
+            - ./dist/ssl:/etc/letsencrypt/live/${PUB_HOST}:ro
         environment:
             - PUB_PORT
             - PUB_PORT_SSL

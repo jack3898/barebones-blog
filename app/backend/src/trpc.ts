@@ -3,7 +3,7 @@ import { decodeJwt, verifyJwt } from '@blog/utils/node/jwt';
 import { inferAsyncReturnType } from '@trpc/server';
 import { CreateNextContextOptions } from '@trpc/server/adapters/next';
 import client from './prisma';
-import { postRouter, testRouter, userRouter } from './queries';
+import { adminRouter, postRouter, testRouter, userRouter } from './queries';
 import { createRouter } from './trpcRouter';
 
 export type Context = inferAsyncReturnType<typeof createContext>;
@@ -31,4 +31,8 @@ export async function createContext(opts: CreateNextContextOptions) {
 }
 
 // Register routers here
-export const trpcRouter = createRouter().merge(testRouter).merge(postRouter).merge(userRouter);
+export const trpcRouter = createRouter()
+	.merge(testRouter)
+	.merge(postRouter)
+	.merge(userRouter)
+	.merge(adminRouter);
