@@ -66,26 +66,24 @@ export function PostComposer() {
 			>
 				<form className="grid gap-4" onSubmit={handleSubmit}>
 					<input type="hidden" {...getFieldProps('id')} />
-					<label>
-						<textarea
-							className="w-full bg-gray-100 rounded p-2"
-							rows={6}
-							placeholder="Write something interesting... 🤔"
-							{...getFieldProps('content')}
-						/>
-					</label>
+					<textarea
+						className="w-full bg-gray-100 rounded p-2"
+						rows={6}
+						placeholder="Write something interesting... 🤔 Supports markdown!"
+						{...getFieldProps('content')}
+					/>
 					{values.content && (
-						<div className="flex gap-2">
-							<SubmitBtn />
-							<CancelEditBtn onConfirm={() => resetForm()} />
-						</div>
+						<>
+							<div className="max-h-96 overflow-y-auto">
+								<Markdown>{values.content}</Markdown>
+							</div>
+							<div className="flex gap-2">
+								<SubmitBtn />
+								<CancelEditBtn onConfirm={() => resetForm()} />
+							</div>
+						</>
 					)}
 				</form>
-				{values.content && (
-					<div className="max-h-96 overflow-y-auto border p-2 rounded">
-						<Markdown>{values.content}</Markdown>
-					</div>
-				)}
 			</Card>
 		</RequireAuth>
 	);

@@ -1,6 +1,7 @@
 import { clientEnvironment } from '@blog/utils/both/httpenv/client';
 import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { trpc } from '../context';
 
 const { backendPort, backendAddress, backendEndpoint } = clientEnvironment;
 
@@ -14,6 +15,7 @@ type LoginData = {
 export function useLogin() {
 	const [error, setError] = useState<string | null>(null);
 	const navigate = useNavigate();
+	const trpcUtils = trpc.useContext();
 
 	const login = useCallback((loginData: LoginData) => {
 		// TODO: Add abort controller in a custom fetch hook abstraction
@@ -24,8 +26,8 @@ export function useLogin() {
 			body: JSON.stringify(loginData)
 		}).then((res) => {
 			if (res.status === 200) {
+				trpcUtils.fetchQuery(['user.loggedin']);
 				navigate('/');
-				window.location.reload();
 			}
 
 			setError('Incorrect username or password');

@@ -1,5 +1,8 @@
 import { useSearchParamsContext } from '@blog/components/context';
+import { Button } from '@blog/components/core';
 import { useModal } from '@blog/components/modal';
+import { faEdit } from '@fortawesome/free-solid-svg-icons/faEdit';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 type EditPostBtnProps = {
 	id: string;
@@ -12,27 +15,25 @@ export function EditPostBtn({ id }: EditPostBtnProps) {
 	if (searchParams.edit === id) return null;
 
 	return (
-		<button
-			className="primary"
+		<Button.Primary
 			onClick={() => {
 				if (searchParams.edit) {
 					modalUpdate({
-						title: 'Confirmation',
+						title: 'Discard other edit',
 						content: <p>You are already editing something else. Discard changes?</p>,
 						footer: (
 							<div className="flex gap-4">
-								<button className="primary" onClick={() => modalToggle(false)}>
+								<Button.Primary onClick={() => modalToggle(false)}>
 									No
-								</button>
-								<button
-									className="danger"
+								</Button.Primary>
+								<Button.Danger
 									onClick={() => {
 										updateSearchParams('set', 'edit', id);
 										modalToggle(false);
 									}}
 								>
 									Yes
-								</button>
+								</Button.Danger>
 							</div>
 						)
 					});
@@ -45,7 +46,7 @@ export function EditPostBtn({ id }: EditPostBtnProps) {
 				updateSearchParams('set', 'edit', id);
 			}}
 		>
-			Edit
-		</button>
+			<FontAwesomeIcon icon={faEdit} title="Edit post" />
+		</Button.Primary>
 	);
 }

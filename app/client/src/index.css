@@ -85,20 +85,3 @@ code {
 input {
 	@apply border rounded p-1;
 }
-
-button,
-[type='submit'] {
-	@apply rounded px-3 py-1 cursor-pointer;
-}
-
-button.primary {
-	@apply bg-slate-500 text-slate-50;
-}
-
-button.danger {
-	@apply bg-red-500 text-slate-50;
-}
-
-button.success {
-	@apply bg-green-500 text-slate-50;
-}

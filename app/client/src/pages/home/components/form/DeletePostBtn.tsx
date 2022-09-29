@@ -1,4 +1,7 @@
+import { Button } from '@blog/components/core';
 import { useModal } from '@blog/components/modal';
+import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 type DeletePostBtnProps = {
 	show: boolean;
@@ -11,29 +14,25 @@ export function DeletePostBtn({ show, onConfirm, ...btnProps }: DeletePostBtnPro
 	if (!show) return null;
 
 	return (
-		<button
-			className="danger"
+		<Button.Danger
 			{...btnProps}
 			onClick={() => {
 				modalUpdate({
-					title: 'Confirmation',
+					title: 'Delete post',
 					content: (
 						<p>Are you sure you want to delete this post? You cannot undo this!</p>
 					),
 					footer: (
 						<div className="flex gap-4">
-							<button className="primary" onClick={() => modalToggle(false)}>
-								No
-							</button>
-							<button
-								className="danger"
+							<Button.Primary onClick={() => modalToggle(false)}>No</Button.Primary>
+							<Button.Danger
 								onClick={() => {
 									onConfirm();
 									modalToggle(false);
 								}}
 							>
 								Yes
-							</button>
+							</Button.Danger>
 						</div>
 					)
 				});
@@ -41,7 +40,7 @@ export function DeletePostBtn({ show, onConfirm, ...btnProps }: DeletePostBtnPro
 				modalToggle(true);
 			}}
 		>
-			Delete
-		</button>
+			<FontAwesomeIcon icon={faTrash} title="Delete post" />
+		</Button.Danger>
 	);
 }

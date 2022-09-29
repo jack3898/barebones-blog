@@ -6,13 +6,13 @@ export function Modal() {
 	if (!modalVisible) return null;
 
 	return (
-		<div className="fixed z-50 top-0 right-0 bottom-0 left-0 grid place-items-center">
+		<div className="fixed z-50 inset-0 grid">
 			<div
 				onClick={() => modalToggle(false)}
 				className="bg-black bg-opacity-50 backdrop-blur-sm col-start-1 col-end-[-1] row-start-1 row-end-[-1] w-full h-full"
 			/>
 			<div className="grid place-items-center col-start-1 col-end-[-1] row-start-1 row-end-[-1] z-[51] p-4">
-				<article className="bg-white rounded w-screen max-w-2xl grid gap-4">
+				<article className="bg-white rounded w-full max-w-2xl grid gap-4">
 					<header className="p-4 border-b">
 						<h2>{modalContent.title}</h2>
 					</header>

@@ -1,10 +1,7 @@
-import { Container } from '@blog/components/core';
+import { Column } from '@blog/components/layout';
+import { Header } from 'src/components';
 import { LoginForm } from './components/LoginForm';
 
 export default function Login() {
-	return (
-		<Container className="grid gap-8 px-4">
-			<LoginForm />
-		</Container>
-	);
+	return <Column header={<Header pageTitle="Login" />} main={<LoginForm />} footer={null} />;
 }

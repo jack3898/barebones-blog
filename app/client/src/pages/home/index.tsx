@@ -1,6 +1,8 @@
-import { Container } from '@blog/components/core';
+import { useAuthContext } from '@blog/components/context';
+import { Column } from '@blog/components/layout';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { Header } from 'src/components';
 import { useInitialInfinitePostsQuery } from 'src/trpc-hooks';
 import { PostComposer } from './components/PostComposer';
 import { PostList } from './components/PostList';
@@ -8,6 +10,7 @@ import { PostList } from './components/PostList';
 export default function Home() {
 	const posts = useInitialInfinitePostsQuery();
 	const { ref, inView } = useInView();
+	const { loggedInUser } = useAuthContext();
 
 	useEffect(() => {
 		if (inView && posts.hasNextPage) {
@@ -16,12 +19,20 @@ export default function Home() {
 	}, [inView]);
 
 	return (
-		<Container className="grid gap-4 px-4">
-			<h1>Posts</h1>
-			<PostComposer />
-			<PostList />
-			{/* Infinite scroll trigger */}
-			<i ref={ref} />
-		</Container>
+		<Column
+			header={
+				<Header
+					pageTitle={loggedInUser ? `${loggedInUser.firstname}'s feed` : 'Public feed'}
+				/>
+			}
+			main={
+				<div className="grid gap-4">
+					<PostComposer />
+					<PostList />
+					<i ref={ref} />
+				</div>
+			}
+			footer={null}
+		/>
 	);
 }

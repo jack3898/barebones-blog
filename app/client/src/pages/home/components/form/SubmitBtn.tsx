@@ -1,7 +1,11 @@
+import { Button } from '@blog/components/core';
+import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 export function SubmitBtn() {
 	return (
-		<button type="submit" className="primary">
-			Submit
-		</button>
+		<Button.Success type="submit">
+			<FontAwesomeIcon icon={faCheck} />
+		</Button.Success>
 	);
 }

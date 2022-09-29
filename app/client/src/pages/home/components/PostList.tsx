@@ -24,6 +24,10 @@ export function PostList() {
 
 	const posts = postsResponse.pages.flatMap(({ items }) => items);
 
+	if (!posts.length) {
+		return <p className="text-center">Nothing here yet 😔</p>;
+	}
+
 	return (
 		<>
 			{posts.map(({ id, content, created, published, author: { firstname, lastname } }) => (
