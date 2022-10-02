@@ -1,0 +1,4 @@
+process.env.JWT_SECRET = 'changeme';
+process.env.TEST_HASH = '$2b$11$3kJClj/dsYGdA/jndgx7B.DFb1xqurmgNevPcnKbIIb0r2Ub6KZjm'; // password123
+process.env.TEST_JWT =
+	'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjM3Njc0ZjMzLTQyMTEtNGJmMS1iNjA5LWM4ZDU3OGQ4YjAxYSIsInVzZXJuYW1lIjoiamFja3ciLCJlbWFpbCI6ImphY2tAZW1haWwuY29tIiwiZmlyc3RuYW1lIjoiSmFjayIsImxhc3RuYW1lIjoiV3JpZ2h0IiwiYWRtaW4iOnRydWUsImNyZWF0ZWQiOiIyMDIyLTEwLTAyVDE3OjQ3OjMyLjkyOFoiLCJpYXQiOjE2NjQ3Mzk3MjF9.3ozadNaDU54M6KAQjuocpjXrasY7Ca-GFjWXvOecqhvW_fWTTtfPaCw9kHP93buh2p5qD8CrfSEZnN4R8o-k0g';

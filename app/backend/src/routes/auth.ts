@@ -4,7 +4,7 @@ import { signJwt } from '@blog/utils/node/jwt';
 import { User } from '@prisma/client';
 import bodyParser from 'body-parser';
 import express from 'express';
-import client from '../../src/prisma';
+import client from '../prisma';
 
 const router = express.Router();
 

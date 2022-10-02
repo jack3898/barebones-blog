@@ -17,7 +17,7 @@ export default function server() {
 
 	const app = express();
 
-	const { publicAddr, publicPort, backendInternalPort } = backendEnvironment;
+	const { publicAddr, publicPort } = backendEnvironment;
 
 	if (isDocker) {
 		app.use(
@@ -39,7 +39,5 @@ export default function server() {
 	app.use('/trpc', trpcExpress.createExpressMiddleware({ router: trpcRouter, createContext }));
 	app.use('/auth', authRouter);
 
-	app.listen(backendInternalPort, () => {
-		console.log('BACKEND ONLINE!');
-	});
+	return app;
 }

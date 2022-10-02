@@ -13,7 +13,9 @@
 		"postinstall": "yarn run generate",
 		"build": "turbo run build",
 		"prune": "turbo prune",
-		"generate-ssl": "turbo run generate-ssl"
+		"generate-ssl": "turbo run generate-ssl",
+		"test": "turbo run test",
+		"test:watch": "turbo run test -- --watch"
 	},
 	"keywords": [],
 	"author": "Jack Wright",
