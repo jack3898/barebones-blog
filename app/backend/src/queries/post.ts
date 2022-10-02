@@ -1,13 +1,16 @@
 import { TRPCError } from '@trpc/server';
-import z from 'zod';
+import {
+	postDeleteValidation,
+	postManyValidation,
+	postSetPublishValidation,
+	postSingleValidation,
+	postUpsertValidation
+} from '../../validation/post';
 import { createRouter } from '../trpcRouter';
 
 export const postRouter = createRouter()
 	.query('post.many', {
-		input: z.object({
-			limit: z.number().nullish(),
-			cursor: z.string().nullish()
-		}),
+		input: postManyValidation,
 		async resolve({ ctx, input }) {
 			const limit = Math.min(25, input.limit || 10);
 
@@ -43,9 +46,7 @@ export const postRouter = createRouter()
 		}
 	})
 	.mutation('post.single', {
-		input: z.object({
-			id: z.string()
-		}),
+		input: postSingleValidation,
 		resolve({ ctx, input }) {
 			return ctx.db.post.findUnique({
 				where: {
@@ -55,10 +56,7 @@ export const postRouter = createRouter()
 		}
 	})
 	.mutation('post.upsert', {
-		input: z.object({
-			id: z.string().nullish(),
-			content: z.string()
-		}),
+		input: postUpsertValidation,
 		resolve({ ctx, input }) {
 			if (!ctx.loggedInUser) {
 				throw new TRPCError({
@@ -90,9 +88,7 @@ export const postRouter = createRouter()
 		}
 	})
 	.mutation('post.delete', {
-		input: z.object({
-			id: z.string()
-		}),
+		input: postDeleteValidation,
 		resolve({ ctx, input }) {
 			if (!ctx.loggedInUser) {
 				throw new TRPCError({
@@ -111,10 +107,7 @@ export const postRouter = createRouter()
 		}
 	})
 	.mutation('post.setpublish', {
-		input: z.object({
-			id: z.string(),
-			published: z.boolean()
-		}),
+		input: postSetPublishValidation,
 		resolve({ ctx, input }) {
 			if (!ctx.loggedInUser) {
 				throw new TRPCError({

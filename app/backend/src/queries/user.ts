@@ -1,6 +1,6 @@
 import { createHash } from '@blog/utils/node/hash';
 import { TRPCError } from '@trpc/server';
-import z from 'zod';
+import { userCreateFirstValidation } from '../../validation/user';
 import { createRouter } from '../trpcRouter';
 
 export const userRouter = createRouter()
@@ -23,13 +23,7 @@ export const userRouter = createRouter()
 		}
 	})
 	.mutation('user.createfirst', {
-		input: z.object({
-			username: z.string(),
-			email: z.string(),
-			firstname: z.string(),
-			lastname: z.string(),
-			password: z.string()
-		}),
+		input: userCreateFirstValidation,
 		async resolve({ ctx, input }) {
 			if (await ctx.db.user.findFirst()) {
 				throw new TRPCError({

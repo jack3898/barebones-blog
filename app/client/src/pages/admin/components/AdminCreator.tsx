@@ -1,5 +1,7 @@
+import { userCreateFirstValidation } from '@blog/backend/validation/user';
 import { Button, Card, Form } from '@blog/components/core';
 import { useModal } from '@blog/components/modal';
+import { toFormikValidationSchema } from '@blog/utils/client';
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { useCreateFirstUserMutation } from 'src/trpc-hooks';
@@ -9,7 +11,7 @@ export function AdminCreator() {
 	const createAdmin = useCreateFirstUserMutation();
 	const { modalUpdate, modalToggle } = useModal();
 
-	const { handleSubmit, getFieldProps } = useFormik({
+	const { handleSubmit, getFieldProps, errors } = useFormik({
 		initialValues: {
 			username: '',
 			email: '',
@@ -17,6 +19,7 @@ export function AdminCreator() {
 			lastname: '',
 			password: ''
 		},
+		validationSchema: toFormikValidationSchema(userCreateFirstValidation),
 		onSubmit(values) {
 			createAdmin.mutate(values, {
 				onSuccess(values) {
@@ -57,16 +60,46 @@ export function AdminCreator() {
 
 	return (
 		<Card className="p-4">
-			<form className="grid gap-4" onSubmit={handleSubmit}>
-				<Form.Input label="Username:" type="text" {...getFieldProps('username')} />
-				<Form.Input label="Email:" type="email" {...getFieldProps('email')} />
-				<Form.Input label="Firstname:" type="text" {...getFieldProps('firstname')} />
-				<Form.Input label="Lastname:" type="text" {...getFieldProps('lastname')} />
-				<Form.Input label="Password:" type="password" {...getFieldProps('password')} />
-				<div>
+			<Form.Body onSubmit={handleSubmit}>
+				<Form.Input
+					label="Username"
+					type="text"
+					{...getFieldProps('username')}
+					error={errors.username}
+					required
+				/>
+				<Form.Input
+					label="Email"
+					type="email"
+					{...getFieldProps('email')}
+					error={errors.email}
+					required
+				/>
+				<Form.Input
+					label="Firstname"
+					type="text"
+					{...getFieldProps('firstname')}
+					error={errors.firstname}
+					required
+				/>
+				<Form.Input
+					label="Lastname"
+					type="text"
+					{...getFieldProps('lastname')}
+					error={errors.lastname}
+					required
+				/>
+				<Form.Input
+					label="Password"
+					type="password"
+					{...getFieldProps('password')}
+					error={errors.password}
+					required
+				/>
+				<Form.Section>
 					<Button.Success type="submit">Create</Button.Success>
-				</div>
-			</form>
+				</Form.Section>
+			</Form.Body>
 		</Card>
 	);
 }
