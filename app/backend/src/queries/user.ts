@@ -43,7 +43,7 @@ export const userRouter = createRouter()
 			input.password = hashedPassword;
 
 			return ctx.db.user.create({
-				data: input,
+				data: { ...input, admin: true },
 				select: {
 					id: true,
 					username: true,

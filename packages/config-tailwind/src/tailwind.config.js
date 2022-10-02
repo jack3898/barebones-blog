@@ -6,11 +6,6 @@ const locations = ['app/client', 'packages/components'];
 
 module.exports = {
 	content: locations.map((location) => path.resolve(ROOT, location, '**', '*.(tsx|html)')),
-	plugins: [
-		function ({ addVariant }) {
-			addVariant('child-&', '& > *');
-		}
-	],
 	theme: {
 		extend: {
 			fontFamily: {

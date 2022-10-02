@@ -17,6 +17,7 @@ model User {
   firstname String
   lastname  String
   password  String
+  admin     Boolean
   created   DateTime @default(now())
   Post      Post[]
 }

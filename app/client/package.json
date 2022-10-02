@@ -17,6 +17,7 @@
 		"@fortawesome/fontawesome-svg-core": "^6.2.0",
 		"@fortawesome/free-solid-svg-icons": "^6.2.0",
 		"@fortawesome/react-fontawesome": "^0.2.0",
+		"@hcaptcha/react-hcaptcha": "^1.4.4",
 		"@trpc/client": "^9.27.2",
 		"@trpc/react": "^9.27.2",
 		"@types/dotenv-webpack": "^7.0.3",

@@ -17,6 +17,8 @@ services:
             - PUB_PORT_SSL
             - BACKEND_PUB_ENDPOINT
             - BACKEND_INT_PORT
+            - HCAPTCHA_SITEKEY
+            - HCAPTCHA_SECRET
         volumes:
             - ./dist/ssl:/home/node/dist/ssl:rw
     client:
@@ -33,6 +35,7 @@ services:
                 - BACKEND_PUB_ENDPOINT=${BACKEND_PUB_ENDPOINT}
                 - BACKEND_INT_PORT=${BACKEND_INT_PORT}
                 - CLIENT_INT_PORT=${CLIENT_INT_PORT}
+                - HCAPTCHA_SITEKEY=${HCAPTCHA_SITEKEY}
     nginx:
         container_name: gateway
         build:

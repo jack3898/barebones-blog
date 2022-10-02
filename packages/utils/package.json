@@ -5,11 +5,11 @@
 	"author": "Jack Wright",
 	"license": "ISC",
 	"dependencies": {
-		"@blog/constants": "*",
 		"@blog/config-ts": "*",
-		"bcryptjs": "^2.4.3",
+		"@blog/constants": "*",
 		"@types/bcryptjs": "^2.4.2",
 		"@types/jsonwebtoken": "^8.5.9",
+		"bcryptjs": "^2.4.3",
 		"dotenv": "^16.0.2",
 		"jsonwebtoken": "^8.5.1"
 	}
