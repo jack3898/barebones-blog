@@ -7,12 +7,10 @@ const Admin = lazy(() => import('./pages/admin'));
 
 export function App() {
 	return (
-		<>
-			<Routes>
-				<Route path="/" element={<Home />} />
-				<Route path="/login" element={<Login />} />
-				<Route path="/admin" element={<Admin />} />
-			</Routes>
-		</>
+		<Routes>
+			<Route path="/" element={<Home />} />
+			<Route path="/login" element={<Login />} />
+			<Route path="/admin" element={<Admin />} />
+		</Routes>
 	);
 }
