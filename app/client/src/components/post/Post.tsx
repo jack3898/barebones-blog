@@ -1,21 +1,21 @@
-import { Card } from './Card';
+import { Card } from '@blog/components/core';
 
 type PostProps = {
 	content: React.ReactNode;
 	created: string;
 	author: string;
-	controls?: React.ReactNode;
+	footer?: React.ReactNode;
 };
 
-export function Post({ content, created, author, controls }: PostProps) {
+export function Post({ content, created, author, footer }: PostProps) {
 	return (
-		<Card>
+		<Card className="overflow-hidden">
 			<article className="p-4 grid gap-4">
 				<div>{content}</div>
 				<small>
 					By {author}, {created}
 				</small>
-				{controls ? <div>{controls}</div> : null}
+				{footer ? <div>{footer}</div> : null}
 			</article>
 		</Card>
 	);

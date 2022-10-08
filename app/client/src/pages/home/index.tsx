@@ -4,8 +4,8 @@ import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { Header } from 'src/components';
 import { useInitialInfinitePostsQuery } from 'src/trpc-hooks';
-import { PostComposer } from './components/PostComposer';
-import { PostList } from './components/PostList';
+import { PostComposer } from '../../components/post/PostComposer';
+import { PostList } from '../../components/post/PostList';
 
 export default function Home() {
 	const posts = useInitialInfinitePostsQuery();

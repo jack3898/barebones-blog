@@ -29,6 +29,42 @@ export const postRouter = createRouter()
 							firstname: true,
 							lastname: true
 						}
+					},
+					comments: {
+						where: {
+							parentId: null
+						},
+						orderBy: {
+							created: 'desc'
+						},
+						select: {
+							id: true,
+							author: {
+								select: {
+									firstname: true,
+									lastname: true
+								}
+							},
+							content: true,
+							replies: {
+								orderBy: {
+									created: 'desc'
+								},
+								select: {
+									id: true,
+									content: true,
+									author: {
+										select: {
+											firstname: true,
+											lastname: true
+										}
+									},
+									postId: true,
+									parentId: true
+								}
+							},
+							postId: true
+						}
 					}
 				},
 				take: limit + 1, // one more for the cursor

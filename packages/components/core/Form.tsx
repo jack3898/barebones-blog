@@ -3,7 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import React, { forwardRef } from 'react';
 
-export const Form = {} as Record<'Input' | 'Body' | 'Captcha' | 'Section', React.ElementType>;
+export const Form = {} as Record<
+	'Input' | 'Body' | 'Captcha' | 'Section' | 'Textarea',
+	React.ElementType
+>;
 
 type FormProps = React.ComponentProps<'form'>;
 
@@ -60,4 +63,21 @@ type SectionProps = React.ComponentProps<'div'>;
 
 Form.Section = function (props: SectionProps) {
 	return <div {...props} />;
+};
+
+type TextareaProps = {
+	error?: string;
+} & React.ComponentProps<'textarea'>;
+
+Form.Textarea = function ({ error, ...props }: TextareaProps) {
+	return (
+		<div>
+			<textarea {...props} />
+			{error && (
+				<small className="text-red-500">
+					<FontAwesomeIcon icon={faExclamationCircle} /> {error}
+				</small>
+			)}
+		</div>
+	);
 };

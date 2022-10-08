@@ -43,8 +43,9 @@ export function useUpsertPostMutation() {
 									},
 									created: created,
 									published: false,
-									updated: updated,
-									userId: loggedInUser?.id!
+									updated,
+									userId: loggedInUser?.id!,
+									comments: []
 								},
 								...page.items
 							]

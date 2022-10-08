@@ -4,11 +4,11 @@ import { useModal } from '@blog/components/modal';
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-type CancelEditBtnProps = {
+type CancelBtnProps = {
 	onConfirm: () => void;
 };
 
-export function CancelEditBtn({ onConfirm }: CancelEditBtnProps) {
+export function CancelBtn({ onConfirm }: CancelBtnProps) {
 	const { modalToggle, modalUpdate } = useModal();
 	const [, updateSearchParams] = useSearchParamsContext();
 

@@ -1,12 +1,12 @@
 import { trpc, useSearchParamsContext } from '@blog/components/context';
-import { Card, Markdown, RequireAuth } from '@blog/components/core';
+import { Card, Form, Markdown, RequireAuth } from '@blog/components/core';
 import { useFormik } from 'formik';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCreatePostMutation, useInitialInfinitePostsQueryParams } from 'src/trpc-hooks';
 import { usePostMutation } from 'src/trpc-hooks/usePostMutation';
-import { CancelEditBtn } from './form/CancelEditBtn';
-import { SubmitBtn } from './form/SubmitBtn';
+import { CancelBtn } from './buttons/CancelBtn';
+import { SubmitBtn } from './buttons/SubmitBtn';
 
 export function PostComposer() {
 	const trpcUtils = trpc.useContext();
@@ -64,9 +64,9 @@ export function PostComposer() {
 					values.content ? 'shadow-2xl relative' : ''
 				} p-4 grid gap-4 transition-shadow max-h-screen `}
 			>
-				<form className="grid gap-4" onSubmit={handleSubmit}>
+				<Form.Body className="grid gap-4" onSubmit={handleSubmit}>
 					<input type="hidden" {...getFieldProps('id')} />
-					<textarea
+					<Form.Textarea
 						className="w-full bg-gray-100 rounded p-2"
 						rows={6}
 						placeholder="Write something interesting... 🤔 Supports markdown!"
@@ -79,11 +79,11 @@ export function PostComposer() {
 							</div>
 							<div className="flex gap-2">
 								<SubmitBtn />
-								<CancelEditBtn onConfirm={() => resetForm()} />
+								<CancelBtn onConfirm={() => resetForm()} />
 							</div>
 						</>
 					)}
-				</form>
+				</Form.Body>
 			</Card>
 		</RequireAuth>
 	);

@@ -11,23 +11,39 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  username  String   @unique
-  email     String   @unique
+  id        String    @id @default(uuid())
+  username  String    @unique
+  email     String    @unique
   firstname String
   lastname  String
   password  String
   admin     Boolean
-  created   DateTime @default(now())
-  Post      Post[]
+  created   DateTime  @default(now())
+  posts     Post[]
+  comments  Comment[]
 }
 
 model Post {
-  id        String   @id @default(uuid())
+  id        String    @id @default(uuid())
   content   String
-  created   DateTime @default(now())
-  updated   DateTime @updatedAt
-  published Boolean  @default(false)
-  author    User     @relation(fields: [userId], references: [id])
+  created   DateTime  @default(now())
+  updated   DateTime  @updatedAt
+  published Boolean   @default(false)
+  author    User      @relation(fields: [userId], references: [id])
   userId    String
+  comments  Comment[]
+}
+
+model Comment {
+  id       String    @id @default(uuid())
+  content  String
+  created  DateTime  @default(now())
+  updated  DateTime  @updatedAt
+  author   User?     @relation(fields: [userId], references: [id])
+  userId   String?
+  post     Post      @relation(fields: [postId], references: [id])
+  postId   String
+  parentId String?
+  replies  Comment[] @relation("ReplyHistory")
+  parent   Comment?  @relation("ReplyHistory", fields: [parentId], references: [id])
 }
