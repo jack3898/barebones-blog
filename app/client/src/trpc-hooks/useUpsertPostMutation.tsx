@@ -6,7 +6,7 @@ export function useUpsertPostMutation() {
 	const { loggedInUser } = useAuthContext();
 
 	return trpc.useMutation(['post.upsert'], {
-		onSuccess({ id, content, created, updated }) {
+		onSuccess({ id, content, created, updated, published }) {
 			trpcUtils.cancelQuery(['post.many']);
 
 			trpcUtils.setInfiniteQueryData(
@@ -42,10 +42,19 @@ export function useUpsertPostMutation() {
 										lastname: loggedInUser?.lastname!
 									},
 									created: created,
-									published: false,
+									published,
 									updated,
 									userId: loggedInUser?.id!,
-									comments: []
+									comments: [
+										{
+											id: 'updated_comment',
+											author: { firstname: 'System', lastname: 'User' },
+											content:
+												'Post updated. Your comments still remain, you will need to refresh. (I am aware this needs to be fixed!)',
+											postId: id,
+											replies: []
+										}
+									]
 								},
 								...page.items
 							]

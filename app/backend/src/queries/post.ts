@@ -118,7 +118,8 @@ export const postRouter = createRouter()
 					id: true,
 					content: true,
 					created: true,
-					updated: true
+					updated: true,
+					published: true
 				}
 			});
 		}
