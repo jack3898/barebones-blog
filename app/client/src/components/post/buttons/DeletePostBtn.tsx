@@ -20,7 +20,10 @@ export function DeletePostBtn({ show, onConfirm, ...btnProps }: DeletePostBtnPro
 				modalUpdate({
 					title: 'Delete post',
 					content: (
-						<p>Are you sure you want to delete this post? You cannot undo this!</p>
+						<p>
+							Are you sure you want to delete this post? This will remove all attached
+							comments and cannot be reversed!
+						</p>
 					),
 					footer: (
 						<div className="flex gap-4">

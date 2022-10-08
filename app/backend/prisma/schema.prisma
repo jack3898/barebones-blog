@@ -41,9 +41,9 @@ model Comment {
   updated  DateTime  @updatedAt
   author   User?     @relation(fields: [userId], references: [id])
   userId   String?
-  post     Post      @relation(fields: [postId], references: [id])
+  post     Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId   String
   parentId String?
   replies  Comment[] @relation("ReplyHistory")
-  parent   Comment?  @relation("ReplyHistory", fields: [parentId], references: [id])
+  parent   Comment?  @relation("ReplyHistory", fields: [parentId], references: [id], onDelete: Cascade)
 }
