@@ -1,6 +1,7 @@
 import { commentCreateValidation } from '@blog/backend/validation/comment';
 import { Form, RequireAuth } from '@blog/components/core';
 import { useFormik } from 'formik';
+import { useEffect } from 'react';
 import { useCreateCommentMutation } from 'src/trpc-hooks';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { CancelBtn } from './buttons/CancelBtn';
@@ -10,6 +11,7 @@ type CommmentComposerProps = {
 	parentId?: string;
 	postId: string;
 	onCancel?: () => void;
+	onSuccess?: () => void;
 	placeholder?: string;
 };
 
@@ -17,6 +19,7 @@ export function CommentComposer({
 	postId,
 	parentId = '',
 	onCancel,
+	onSuccess,
 	placeholder
 }: CommmentComposerProps) {
 	const createCommentMutation = useCreateCommentMutation();
@@ -31,6 +34,12 @@ export function CommentComposer({
 			createCommentMutation.mutate(values);
 		}
 	});
+
+	useEffect(() => {
+		if (createCommentMutation.status === 'success') {
+			onSuccess?.();
+		}
+	}, [createCommentMutation.status]);
 
 	return (
 		<RequireAuth>

@@ -53,6 +53,7 @@ export function PostList() {
 										postId={id}
 										onCancel={() => setCommentingId('')}
 										placeholder={`What do you think of ${firstname}'s post?`}
+										onSuccess={() => setCommentingId('')}
 									/>
 								)}
 								<CommentSection comments={comments} />

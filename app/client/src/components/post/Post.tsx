@@ -15,7 +15,7 @@ export function Post({ content, created, author, footer }: PostProps) {
 				<small>
 					By {author}, {created}
 				</small>
-				{footer ? <div>{footer}</div> : null}
+				{footer && <div>{footer}</div>}
 			</article>
 		</Card>
 	);

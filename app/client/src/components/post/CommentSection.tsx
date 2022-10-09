@@ -55,6 +55,7 @@ export function CommentSection({ comments, isReply = false }: PostCommentSection
 											parentId={id}
 											postId={postId}
 											onCancel={() => setReplyingId('')}
+											onSuccess={() => setReplyingId('')}
 											placeholder={`What do you want to say to ${author?.firstname}'s comment?`}
 										/>
 									)}
