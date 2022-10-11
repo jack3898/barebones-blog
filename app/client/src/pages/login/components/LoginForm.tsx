@@ -3,6 +3,7 @@ import { useLogin } from '@blog/components/hooks';
 import { toFormikValidationSchema } from '@blog/utils/client';
 import { useFormik } from 'formik';
 import { useRef } from 'react';
+import { Link } from 'react-router-dom';
 import z from 'zod';
 
 export function LoginForm() {
@@ -56,6 +57,9 @@ export function LoginForm() {
 				</Form.Body>
 				{error && <p>{error}</p>}
 			</Card>
+			<p>
+				Don't have an account? <Link to="/signup">Create one!</Link>
+			</p>
 		</RequireAuth>
 	);
 }

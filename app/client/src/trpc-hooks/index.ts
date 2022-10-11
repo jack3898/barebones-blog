@@ -1,5 +1,6 @@
 export { useCreateCommentMutation } from './useCreateCommentMutation';
 export { useCreateFirstUserMutation } from './useCreateFirstUserMutation';
+export { useCreateUserMutation } from './useCreateUserMutation';
 export { useDeletePostMutation } from './useDeletePostMutation';
 export {
 	useInitialInfinitePostsQuery,

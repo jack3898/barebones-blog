@@ -52,7 +52,8 @@ describe('/auth', () => {
 			firstname: 'firstname',
 			lastname: 'lastname',
 			username: 'username',
-			password: process.env.TEST_HASH! // is password123
+			password: process.env.TEST_HASH!, // is password123,
+			verified: true
 		});
 
 		await request(server()).post('/auth').send({
@@ -73,7 +74,8 @@ describe('/auth', () => {
 			firstname: 'firstname',
 			lastname: 'lastname',
 			username: 'username',
-			password: process.env.TEST_HASH! // is password123
+			password: process.env.TEST_HASH!, // is password123
+			verified: true
 		});
 
 		const response = await request(server()).post('/auth').send({
@@ -94,7 +96,8 @@ describe('/auth', () => {
 			firstname: 'firstname',
 			lastname: 'lastname',
 			username: 'username',
-			password: process.env.TEST_HASH! // is password123
+			password: process.env.TEST_HASH!, // is password123
+			verified: true
 		});
 
 		const {
@@ -121,7 +124,8 @@ describe('/auth', () => {
 			firstname: 'firstname',
 			lastname: 'lastname',
 			username: 'username',
-			password: process.env.TEST_HASH! // is password123
+			password: process.env.TEST_HASH!, // is password123
+			verified: true
 		});
 
 		const {

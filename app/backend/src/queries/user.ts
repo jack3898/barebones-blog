@@ -1,6 +1,6 @@
 import { createHash } from '@blog/utils/node/hash';
 import { TRPCError } from '@trpc/server';
-import { userCreateFirstValidation } from '../../validation/user';
+import { userCreateValidation } from '../../validation/user';
 import { createRouter } from '../trpcRouter';
 
 export const userRouter = createRouter()
@@ -23,7 +23,7 @@ export const userRouter = createRouter()
 		}
 	})
 	.mutation('user.createfirst', {
-		input: userCreateFirstValidation,
+		input: userCreateValidation,
 		async resolve({ ctx, input }) {
 			if (await ctx.db.user.findFirst()) {
 				throw new TRPCError({
@@ -38,6 +38,29 @@ export const userRouter = createRouter()
 
 			return ctx.db.user.create({
 				data: { ...input, admin: true },
+				select: {
+					id: true,
+					username: true,
+					email: true,
+					firstname: true,
+					lastname: true
+				}
+			});
+		}
+	})
+	.mutation('user.create', {
+		input: userCreateValidation,
+		async resolve({ ctx, input }) {
+			const hashedPassword = await createHash(input.password);
+
+			input.password = hashedPassword;
+
+			return ctx.db.user.create({
+				data: {
+					...input,
+					verified: false,
+					admin: false
+				},
 				select: {
 					id: true,
 					username: true,

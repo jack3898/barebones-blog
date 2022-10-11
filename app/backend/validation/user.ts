@@ -1,6 +1,6 @@
 import z from 'zod';
 
-export const userCreateFirstValidation = z.object({
+export const userCreateValidation = z.object({
 	username: z.string().min(3),
 	email: z.string().email(),
 	firstname: z.string(),

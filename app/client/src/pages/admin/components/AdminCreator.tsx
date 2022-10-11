@@ -1,4 +1,4 @@
-import { userCreateFirstValidation } from '@blog/backend/validation/user';
+import { userCreateValidation } from '@blog/backend/validation/user';
 import { Button, Card, Form } from '@blog/components/core';
 import { useModal } from '@blog/components/modal';
 import { toFormikValidationSchema } from '@blog/utils/client';
@@ -19,7 +19,7 @@ export function AdminCreator() {
 			lastname: '',
 			password: ''
 		},
-		validationSchema: toFormikValidationSchema(userCreateFirstValidation),
+		validationSchema: toFormikValidationSchema(userCreateValidation),
 		onSubmit(values) {
 			createAdmin.mutate(values, {
 				onSuccess(values) {

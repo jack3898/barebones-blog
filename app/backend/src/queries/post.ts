@@ -126,7 +126,7 @@ export const postRouter = createRouter()
 	})
 	.mutation('post.delete', {
 		input: postDeleteValidation,
-		resolve({ ctx, input }) {
+		async resolve({ ctx, input }) {
 			if (!ctx.loggedInUser) {
 				throw new TRPCError({
 					code: 'UNAUTHORIZED',
@@ -134,18 +134,27 @@ export const postRouter = createRouter()
 				});
 			}
 
-			return ctx.db.post.deleteMany({
+			const data = await ctx.db.post.deleteMany({
 				where: {
 					id: input.id,
 					published: false,
 					userId: ctx.loggedInUser.id
 				}
 			});
+
+			if (data.count) {
+				return data;
+			}
+
+			throw new TRPCError({
+				code: 'UNAUTHORIZED',
+				message: 'Not the owner of the post'
+			});
 		}
 	})
 	.mutation('post.setpublish', {
 		input: postSetPublishValidation,
-		resolve({ ctx, input }) {
+		async resolve({ ctx, input }) {
 			if (!ctx.loggedInUser) {
 				throw new TRPCError({
 					code: 'UNAUTHORIZED',
@@ -153,7 +162,7 @@ export const postRouter = createRouter()
 				});
 			}
 
-			return ctx.db.post.updateMany({
+			const data = await ctx.db.post.updateMany({
 				where: {
 					id: input.id,
 					userId: ctx.loggedInUser.id
@@ -161,6 +170,15 @@ export const postRouter = createRouter()
 				data: {
 					published: input.published
 				}
+			});
+
+			if (data.count) {
+				return data;
+			}
+
+			throw new TRPCError({
+				code: 'UNAUTHORIZED',
+				message: 'Not the owner of the post'
 			});
 		}
 	});

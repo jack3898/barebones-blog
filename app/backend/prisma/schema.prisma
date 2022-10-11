@@ -19,6 +19,7 @@ model User {
   password  String
   admin     Boolean
   created   DateTime  @default(now())
+  verified  Boolean   @default(false)
   posts     Post[]
   comments  Comment[]
 }
