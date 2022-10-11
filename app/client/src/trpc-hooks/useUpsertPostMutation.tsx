@@ -39,7 +39,8 @@ export function useUpsertPostMutation() {
 									content,
 									author: {
 										firstname: loggedInUser?.firstname!,
-										lastname: loggedInUser?.lastname!
+										lastname: loggedInUser?.lastname!,
+										username: loggedInUser?.username!
 									},
 									created: created,
 									published,
@@ -48,7 +49,11 @@ export function useUpsertPostMutation() {
 									comments: [
 										{
 											id: 'updated_comment',
-											author: { firstname: 'System', lastname: 'User' },
+											author: {
+												firstname: 'System',
+												lastname: 'User',
+												username: ''
+											},
 											content:
 												'Post updated. Your comments still remain, you will need to refresh. (I am aware this needs to be fixed!)',
 											postId: id,

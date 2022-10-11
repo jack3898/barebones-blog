@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { CommentSection } from 'src/components/post/CommentSection';
 import { useInitialInfinitePostsQueryParams } from 'src/trpc-hooks';
 import { CommentComposer } from './CommentComposer';
+import { PostProvider } from './context/post';
 import { Controls } from './Controls';
 
 export function PostList() {
@@ -33,33 +34,30 @@ export function PostList() {
 					content,
 					created,
 					published,
-					author: { firstname, lastname },
+					author: { firstname, lastname, username },
 					comments
 				}) => (
-					<Post
-						key={id}
-						content={<Markdown>{content}</Markdown>}
-						created={format(new Date(created), DATE_TIME)}
-						author={`${firstname} ${lastname}`}
-						footer={
-							<div className="grid gap-4">
-								<Controls
-									postId={id}
-									published={published}
-									onStartComment={() => setCommentingId(id)}
-								/>
-								{commentingId === id && (
-									<CommentComposer
-										postId={id}
-										onCancel={() => setCommentingId('')}
-										placeholder={`What do you think of ${firstname}'s post?`}
-										onSuccess={() => setCommentingId('')}
-									/>
-								)}
-								<CommentSection comments={comments} />
-							</div>
-						}
-					/>
+					<PostProvider postId={id} authorUsername={username} published={published}>
+						<Post
+							key={id}
+							content={<Markdown>{content}</Markdown>}
+							created={format(new Date(created), DATE_TIME)}
+							author={`${firstname} ${lastname}`}
+							footer={
+								<div className="grid gap-4">
+									<Controls onStartComment={() => setCommentingId(id)} />
+									{commentingId === id && (
+										<CommentComposer
+											onCancel={() => setCommentingId('')}
+											placeholder={`What do you think of ${firstname}'s post?`}
+											onSuccess={() => setCommentingId('')}
+										/>
+									)}
+									<CommentSection comments={comments} />
+								</div>
+							}
+						/>
+					</PostProvider>
 				)
 			)}
 		</>

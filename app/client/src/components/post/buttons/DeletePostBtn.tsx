@@ -2,16 +2,17 @@ import { Button } from '@blog/components/core';
 import { useModal } from '@blog/components/modal';
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { usePost } from '../context/post';
 
 type DeletePostBtnProps = {
-	show: boolean;
 	onConfirm: () => void;
 } & Omit<React.HTMLAttributes<HTMLButtonElement>, 'className'>;
 
-export function DeletePostBtn({ show, onConfirm, ...btnProps }: DeletePostBtnProps) {
+export function DeletePostBtn({ onConfirm, ...btnProps }: DeletePostBtnProps) {
 	const { modalToggle, modalUpdate } = useModal();
+	const { ownsPost, published } = usePost();
 
-	if (!show) return null;
+	if (published || !ownsPost) return null;
 
 	return (
 		<Button.Danger
@@ -28,6 +29,7 @@ export function DeletePostBtn({ show, onConfirm, ...btnProps }: DeletePostBtnPro
 					footer: (
 						<div className="flex gap-4">
 							<Button.Primary onClick={() => modalToggle(false)}>No</Button.Primary>
+
 							<Button.Danger
 								onClick={() => {
 									onConfirm();

@@ -3,6 +3,7 @@ import { Button } from '@blog/components/core';
 import { useModal } from '@blog/components/modal';
 import { faEdit } from '@fortawesome/free-solid-svg-icons/faEdit';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { usePost } from '../context/post';
 
 type EditPostBtnProps = {
 	id: string;
@@ -11,8 +12,9 @@ type EditPostBtnProps = {
 export function EditPostBtn({ id }: EditPostBtnProps) {
 	const [searchParams, updateSearchParams] = useSearchParamsContext();
 	const { modalToggle, modalUpdate } = useModal();
+	const { ownsPost } = usePost();
 
-	if (searchParams.edit === id) return null;
+	if (searchParams.edit === id || !ownsPost) return null;
 
 	return (
 		<Button.Primary

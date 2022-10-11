@@ -30,7 +30,7 @@ export function CommentSection({ comments, isReply = false }: PostCommentSection
 
 	return (
 		<ul className={`${!isReply ? 'border-t' : 'border-l'}`}>
-			{comments?.map(({ id, author, content, replies, postId }) => {
+			{comments?.map(({ id, author, content, replies }) => {
 				const editing = replyingWithId === id;
 
 				return (
@@ -53,7 +53,6 @@ export function CommentSection({ comments, isReply = false }: PostCommentSection
 									{editing && (
 										<CommentComposer
 											parentId={id}
-											postId={postId}
 											onCancel={() => setReplyingId('')}
 											onSuccess={() => setReplyingId('')}
 											placeholder={`What do you want to say to ${author?.firstname}'s comment?`}

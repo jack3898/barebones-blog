@@ -4,16 +4,16 @@ import { CommentBtn } from './buttons/CommentBtn';
 import { DeletePostBtn } from './buttons/DeletePostBtn';
 import { EditPostBtn } from './buttons/EditPostBtn';
 import { TogglePublishBtn } from './buttons/TogglePublishBtn';
+import { usePost } from './context/post';
 
 type ControlsProps = {
-	postId: string;
-	published: boolean;
 	onStartComment: () => void;
 };
 
-export function Controls({ postId, published, onStartComment }: ControlsProps) {
+export function Controls({ onStartComment }: ControlsProps) {
 	const publishPostMutation = usePublishPostMutation();
 	const deletePostMutation = useDeletePostMutation();
+	const { postId, published } = usePost();
 
 	return (
 		<RequireAuth>
@@ -34,7 +34,6 @@ export function Controls({ postId, published, onStartComment }: ControlsProps) {
 				</div>
 				<div className="text-right">
 					<DeletePostBtn
-						show={!published}
 						onConfirm={() =>
 							deletePostMutation.mutate({
 								id: postId

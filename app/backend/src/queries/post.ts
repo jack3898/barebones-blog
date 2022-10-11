@@ -27,7 +27,8 @@ export const postRouter = createRouter()
 					author: {
 						select: {
 							firstname: true,
-							lastname: true
+							lastname: true,
+							username: true
 						}
 					},
 					comments: {
@@ -42,7 +43,8 @@ export const postRouter = createRouter()
 							author: {
 								select: {
 									firstname: true,
-									lastname: true
+									lastname: true,
+									username: true
 								}
 							},
 							content: true,
@@ -56,7 +58,8 @@ export const postRouter = createRouter()
 									author: {
 										select: {
 											firstname: true,
-											lastname: true
+											lastname: true,
+											username: true
 										}
 									},
 									postId: true,
@@ -143,13 +146,13 @@ export const postRouter = createRouter()
 			});
 
 			if (data.count) {
-				return data;
+				throw new TRPCError({
+					code: 'UNAUTHORIZED',
+					message: 'Not the owner of the post'
+				});
 			}
 
-			throw new TRPCError({
-				code: 'UNAUTHORIZED',
-				message: 'Not the owner of the post'
-			});
+			return data;
 		}
 	})
 	.mutation('post.setpublish', {
@@ -172,13 +175,13 @@ export const postRouter = createRouter()
 				}
 			});
 
-			if (data.count) {
-				return data;
+			if (!data.count) {
+				throw new TRPCError({
+					code: 'UNAUTHORIZED',
+					message: 'Not the owner of the post'
+				});
 			}
 
-			throw new TRPCError({
-				code: 'UNAUTHORIZED',
-				message: 'Not the owner of the post'
-			});
+			return data;
 		}
 	});

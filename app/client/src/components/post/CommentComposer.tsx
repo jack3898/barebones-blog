@@ -6,23 +6,23 @@ import { useCreateCommentMutation } from 'src/trpc-hooks';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { CancelBtn } from './buttons/CancelBtn';
 import { SubmitBtn } from './buttons/SubmitBtn';
+import { usePost } from './context/post';
 
 type CommmentComposerProps = {
 	parentId?: string;
-	postId: string;
 	onCancel?: () => void;
 	onSuccess?: () => void;
 	placeholder?: string;
 };
 
 export function CommentComposer({
-	postId,
 	parentId = '',
 	onCancel,
 	onSuccess,
 	placeholder
 }: CommmentComposerProps) {
 	const createCommentMutation = useCreateCommentMutation();
+	const { postId } = usePost();
 	const { handleSubmit, getFieldProps, errors } = useFormik({
 		initialValues: {
 			postId,
