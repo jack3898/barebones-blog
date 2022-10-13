@@ -145,13 +145,6 @@ export const postRouter = createRouter()
 				}
 			});
 
-			if (data.count) {
-				throw new TRPCError({
-					code: 'UNAUTHORIZED',
-					message: 'Not the owner of the post'
-				});
-			}
-
 			return data;
 		}
 	})
