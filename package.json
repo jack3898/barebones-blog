@@ -14,8 +14,9 @@
 		"build": "turbo run build",
 		"prune": "turbo prune",
 		"generate-ssl": "turbo run generate-ssl",
-		"test": "turbo run test",
-		"test:watch": "turbo run test -- --watch"
+		"test": "turbo run test --filter=[HEAD]",
+		"test:all": "turbo run test",
+		"test:watch": "turbo run test --watch"
 	},
 	"keywords": [],
 	"author": "Jack Wright",
