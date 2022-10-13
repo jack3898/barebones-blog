@@ -10,30 +10,18 @@ import { createContext, trpcRouter } from './trpc';
 
 rootenv();
 
-const isDocker = !!process.env.DOCKER!;
-
 export default function server() {
-	if (isDocker) sslGen();
+	if (process.env.DOCKER) sslGen();
 
 	const app = express();
-
 	const { publicAddr, publicPort } = backendEnvironment;
 
-	if (isDocker) {
-		app.use(
-			cors({
-				origin: `${publicAddr}:${publicPort}`,
-				credentials: true
-			})
-		);
-	} else {
-		app.use(
-			cors({
-				origin: `${publicAddr}:${publicPort}`,
-				credentials: true
-			})
-		);
-	}
+	app.use(
+		cors({
+			origin: `${publicAddr}:${publicPort}`,
+			credentials: true
+		})
+	);
 
 	app.use(cookieParser());
 	app.use('/trpc', trpcExpress.createExpressMiddleware({ router: trpcRouter, createContext }));
